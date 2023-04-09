@@ -162,7 +162,13 @@ install_x-ui() {
     systemctl daemon-reload
     systemctl enable x-ui
     systemctl start x-ui
-    echo -e "${green}x-ui v${last_version}${plain} 安装完成，面板已启动，"
+    systemctl stop warp-go >/dev/null 2>&1
+    wg-quick down wgcf >/dev/null 2>&1
+    ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
+    ipv6=$(curl -s6m8 ip.p3terx.com -k | sed -n 1p)
+    systemctl start warp-go >/dev/null 2>&1
+    wg-quick up wgcf >/dev/null 2>&1
+    echo -e "${green}x-ui ${last_version}${plain} 安装完成，面板已启动，"
     echo -e ""
     echo -e "x-ui 管理脚本使用方法: "
     echo -e "----------------------------------------------"

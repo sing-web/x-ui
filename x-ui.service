@@ -1,0 +1,15 @@
+[Unit]
+Description=x-ui Service
+Documentation=https://github.com/sing-web/x-ui
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=3
+WorkingDirectory=/usr/local/x-ui/
+ExecStart=/usr/local/x-ui/x-ui
+
+[Install]
+WantedBy=multi-user.target

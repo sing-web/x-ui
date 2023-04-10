@@ -2,6 +2,8 @@
 
 Multi-protocol, multi-user xray panel support
 
+> [中文文档请点击这里进行查看](./README_CN.md)
+
 # Features
 
 - System status monitoring
@@ -128,5 +130,3 @@ afdian: https://afdian.net/a/Misaka-blog
 
 * This program is for learning and understanding only, not for profit, please delete within 24 hours after downloading, not for any commercial use, text, data and images are copyrighted, if reproduced, please indicate the source.
 * Use of this program is subject to the deployment disclaimer. Use of this program is subject to the laws and regulations of the country where the server is deployed and the country where the user is located, and the author of the program is not responsible for any misconduct of the user.
-
-Translated with www.DeepL.com/Translator (free version)

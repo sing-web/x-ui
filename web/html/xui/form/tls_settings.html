@@ -38,7 +38,7 @@
             <a-select-option v-for="key in TLS_VERSION_OPTION" :value="key">[[ key ]]</a-select-option>
         </a-select>
     </a-form-item>
-    <a-form-item label="Alpn">
+    <a-form-item label="alpn">
         <a-checkbox-group v-model="inbound.stream.tls.alpn" style="width:200px">
             <a-checkbox v-for="key in ALPN_OPTION" :value="key">[[ key ]]</a-checkbox>
         </a-checkbox-group>

@@ -1213,9 +1213,8 @@ class Inbound extends XrayCommonClass {
         }
 
         if (this.reality) {
-            dest_domain=this.stream.reality.dest
             params.set("flow", this.settings.vlesses[0].flow);
-            params.set("sni", String(dest_domain).replace(/:\d+$/, ""))
+            params.set("sni", String(this.stream.reality.dest).replace(/:\d+$/, ""))
             params.set("sid", String(this.stream.reality.shortIds))
         }
 

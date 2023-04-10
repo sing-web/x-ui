@@ -109,7 +109,7 @@ config_after_install() {
         echo -e "${yellow} panel port setting complete ${plain}"
     else
         config_port=$(/usr/local/x-ui/x-ui setting -show | sed -n 4p | awk -F ": " '{print $2}')
-        echo -e "${red} is cancelled, all settings are default, please change ${plain} in time"
+        echo -e "${red}Account setting got cancelled, all settings are default, please change it as soon as possible!${plain}"
     fi
 }
 

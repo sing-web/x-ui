@@ -114,11 +114,11 @@ First install the latest version of x-ui on the server where v2-ui is installed,
 x-ui v2-ui
 ```
 
-## Acknowledgements
+## Credits
 
-vaxilu's x-ui project: https://github.com/vaxilu/x-ui
-
-qist's xray-ui project: https://github.com/qist/xray-ui
+* vaxilu's x-ui project: https://github.com/vaxilu/x-ui
+* qist's xray-ui project: https://github.com/qist/xray-ui
+* MHSanaei's 3x-ui project: https://github.com/MHSanaei/3x-ui
 
 ## Sponsorship
 

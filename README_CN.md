@@ -114,9 +114,9 @@ x-ui v2-ui
 
 ## 鸣谢
 
-vaxilu 的 x-ui 项目：https://github.com/vaxilu/x-ui
-
-qist 的 xray-ui 项目：https://github.com/qist/xray-ui
+* vaxilu 的 x-ui 项目：https://github.com/vaxilu/x-ui
+* qist 的 xray-ui 项目：https://github.com/qist/xray-ui
+* MHSanaei 的 3x-ui 项目：https://github.com/MHSanaei/3x-ui
 
 ## 赞助
 

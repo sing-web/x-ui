@@ -74,6 +74,19 @@ const TLS_CIPHER_OPTION = {
     ECDHE_RSA_CHACHA20_POLY1305: "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256",
 };
 
+const UTLS_FINGERPRINT = {
+    UTLS_CHROME: "chrome",
+    UTLS_FIREFOX: "firefox",
+    UTLS_SAFARI: "safari",
+    UTLS_IOS: "ios",
+    UTLS_android: "android",
+    UTLS_EDGE: "edge",
+    UTLS_360: "360",
+    UTLS_QQ: "qq",
+    UTLS_RANDOM: "random",
+    UTLS_RANDOMIZED: "randomized",
+};
+
 const ALPN_OPTION = {
     H3: "h3",
     H2: "h2",
@@ -92,6 +105,9 @@ const DOMAIN_STRATEGY = {
     UseIPv4: "UseIPv4",
     UseIPv6: "UseIPv6",
 }
+
+const bytesToHex = e => Array.from(e).map(e => e.toString(16).padStart(2, 0)).join('');
+const hexToBytes = e => new Uint8Array(e.match(/[0-9a-f]{2}/gi).map(e => parseInt(e, 16)));
 
 Object.freeze(Protocols);
 Object.freeze(VmessMethods);
@@ -568,18 +584,31 @@ TlsStreamSettings.Cert = class extends XrayCommonClass {
 };
 
 class ReaLITyStreamSettings extends XrayCommonClass {
-    constructor(show = false, dest = "", xver = 0, serverNames = '', privateKey = "", minClientVer = "", maxClientVer = "", maxTimeDiff = 0, shortIds = '') {
+    constructor(
+        show = false, 
+        dest = "www.microsoft.com:443", 
+        xver = 0,
+        fingerprint = UTLS_FINGERPRINT.UTLS_CHROME,
+        serverNames = 'www.microsoft.com', 
+        privateKey = RandomUtil.randomX25519PrivateKey(), 
+        publicKey = '',
+        minClientVer = "", 
+        maxClientVer = "", 
+        maxTimeDiff = 0, 
+        shortIds = RandomUtil.randowShortId()
+    ) {
         super();
         this.show = show;
-        this.dest = dest;
+        this.dest = dest;        
         this.xver = xver;
+        this.fingerprint = fingerprint;
         this.serverNames = serverNames instanceof Array ? serverNames.join('\n') : serverNames;
         this.privateKey = privateKey;
+        this.publicKey = RandomUtil.randomX25519PublicKey(this.privateKey);
         this.minClientVer = minClientVer;
         this.maxClientVer = maxClientVer;
         this.maxTimeDiff = maxTimeDiff;
         this.shortIds = shortIds instanceof Array ? shortIds.join('\n') : shortIds;
-
     }
 
     static fromJson(json = {}) {
@@ -587,8 +616,10 @@ class ReaLITyStreamSettings extends XrayCommonClass {
             json.show,
             json.dest,
             json.xver,
+            json.fingerprint,
             json.serverNames,
             json.privateKey,
+            json.publicKey,
             json.minClientVer,
             json.maxClientVer,
             json.maxTimeDiff,
@@ -601,12 +632,14 @@ class ReaLITyStreamSettings extends XrayCommonClass {
             show: this.show,
             dest: this.dest,
             xver: this.xver,
-            serverNames: this.serverNames.split('\n'),
+            fingerprint: this.fingerprint,
+            serverNames: this.serverNames.split(/,|，|\s+/),
             privateKey: this.privateKey,
+            publicKey: this.publicKey,
             minClientVer: this.minClientVer,
             maxClientVer: this.maxClientVer,
             maxTimeDiff: this.maxTimeDiff,
-            shortIds: this.shortIds.split('\n'),
+            shortIds: this.shortIds.split(/,|，|\s+/),
         }
     }
 }
@@ -1214,8 +1247,21 @@ class Inbound extends XrayCommonClass {
 
         if (this.reality) {
             params.set("flow", this.settings.vlesses[0].flow);
-            params.set("sni", String(this.stream.reality.dest).replace(/:\d+$/, ""))
-            params.set("sid", String(this.stream.reality.shortIds))
+            if (!ObjectUtil.isArrEmpty(this.stream.reality.serverNames)) {
+                params.set("sni", this.stream.reality.serverNames.split(/,|，|\s+/)[0]);
+            }
+            if (this.stream.reality.publicKey != "") {
+                params.set("pbk", this.stream.reality.publicKey);
+            }
+            if (this.stream.network === 'tcp') {
+                params.set("flow", this.settings.vlesses[clientIndex].flow);
+            }
+            if (this.stream.reality.shortIds != "") {
+                params.set("sid", this.stream.reality.shortIds);
+            }
+            if (this.stream.reality.fingerprint != "") {
+                params.set("fp", this.stream.reality.fingerprint);
+            }
         }
 
         const link = `vless://${uuid}@${address}:${port}`;

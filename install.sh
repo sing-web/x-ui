@@ -77,11 +77,12 @@ install_base() {
     if [[ x"${release}" == x"centos" ]]; then
         yum install wget curl tar -y
     else
+        apt-get update
         apt install wget curl tar -y
     fi
 }
 
-#This function will be called when user installed x-ui out of sercurity
+# This function will be called when user installed x-ui out of sercurity
 config_after_install() {
     echo -e "${yellow}For security reasons, you need to force a port and account password change after the installation/update is complete ${plain}"
     read -p "Confirmation to continue? [y/n]: " config_confirm
@@ -162,6 +163,7 @@ install_x-ui() {
     systemctl daemon-reload
     systemctl enable x-ui
     systemctl start x-ui
+    
     systemctl stop warp-go >/dev/null 2>&1
     wg-quick down wgcf >/dev/null 2>&1
     ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)

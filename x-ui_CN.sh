@@ -301,12 +301,6 @@ show_log() {
     fi
 }
 
-migrate_v2_ui() {
-    /usr/local/x-ui/x-ui v2-ui
-
-    before_show_menu
-}
-
 install_bbr() {
     # temporary workaround for installing bbr
     bash <(curl -L -s https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
@@ -477,7 +471,6 @@ show_usage() {
     echo "x-ui enable       - 设置 x-ui 开机自启"
     echo "x-ui disable      - 取消 x-ui 开机自启"
     echo "x-ui log          - 查看 x-ui 日志"
-    echo "x-ui v2-ui        - 迁移本机器的 v2-ui 账号数据至 x-ui"
     echo "x-ui update       - 更新 x-ui 面板"
     echo "x-ui install      - 安装 x-ui 面板"
     echo "x-ui uninstall    - 卸载 x-ui 面板"
@@ -601,9 +594,6 @@ if [[ $# > 0 ]]; then
         ;;
     "log")
         check_install 0 && show_log 0
-        ;;
-    "v2-ui")
-        check_install 0 && migrate_v2_ui 0
         ;;
     "update")
         check_install 0 && update 0

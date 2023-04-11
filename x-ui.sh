@@ -301,12 +301,6 @@ show_log() {
     fi
 }
 
-migrate_v2_ui() {
-    /usr/local/x-ui/x-ui v2-ui
-
-    before_show_menu
-}
-
 install_bbr() {
     # temporary workaround for installing bbr
     bash <(curl -L -s https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
@@ -477,7 +471,6 @@ show_usage() {
     echo "x-ui enable - set x-ui to start on its own"
     echo "x-ui disable - disable x-ui power on"
     echo "x-ui log - View x-ui logs" echo "x-ui log - View x-ui logs"
-    echo "x-ui v2-ui - Migrate v2-ui account data from this machine to x-ui"
     echo "x-ui update - Update the x-ui panel"
     echo "x-ui install - Install the x-ui panel"
     echo "x-ui uninstall - uninstall the x-ui panel"
@@ -601,9 +594,6 @@ if [[ $# > 0 ]]; then
         ;;
     "log")
         check_install 0 && show_log 0
-        ;;
-    "v2-ui")
-        check_install 0 && migrate_v2_ui 0
         ;;
     "update")
         check_install 0 && update 0

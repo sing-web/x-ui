@@ -182,7 +182,6 @@ install_x-ui() {
     echo -e "x-ui enable - set x-ui to start on its own"
     echo -e "x-ui disable - disable x-ui boot-up"
     echo -e "x-ui log - View x-ui logs"
-    echo -e "x-ui v2-ui - Migrate v2-ui account data from this machine to x-ui"
     echo -e "x-ui update - Update the x-ui panel"
     echo -e "x-ui install - Install the x-ui panel"
     echo -e "x-ui uninstall - uninstall the x-ui panel"

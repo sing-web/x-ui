@@ -11,7 +11,6 @@ import (
 	"x-ui/config"
 	"x-ui/database"
 	"x-ui/logger"
-	"x-ui/v2ui"
 	"x-ui/web"
 	"x-ui/web/global"
 	"x-ui/web/service"
@@ -280,7 +279,6 @@ func main() {
 		fmt.Println()
 		runCmd.Usage()
 		fmt.Println()
-		v2uiCmd.Usage()
 		fmt.Println()
 		settingCmd.Usage()
 	}

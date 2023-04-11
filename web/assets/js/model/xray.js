@@ -1193,6 +1193,7 @@ class Inbound extends XrayCommonClass {
         } else {
             params.set("security", this.stream.security);
         }
+        
         switch (type) {
             case "tcp":
                 const tcp = this.stream.tcp;

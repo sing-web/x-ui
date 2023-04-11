@@ -742,12 +742,12 @@ class StreamSettings extends XrayCommonClass {
     }
 
     get isSockopt() {
-        return ['none', 'reality', 'tls'].indexOf(this.security) !== -1;
+        return ['none'].indexOf(this.security) !== -1;
     }
 
     set isSockopt(isSockopt) {
         if (isSockopt) {
-            return ['none', 'reality', 'tls'].indexOf(this.security) !== -1;
+            return ['none'].indexOf(this.security) !== -1;
         }
     }
 
@@ -866,12 +866,12 @@ class Inbound extends XrayCommonClass {
     }
 
     get sockopt() {
-        return ['none', 'reality', 'tls'].indexOf(this.stream.security) !== -1;
+        return ['none'].indexOf(this.stream.security) !== -1;
     }
     
     set sockopt(isSockopt) {
         if (isSockopt) {
-            return ['none', 'reality', 'tls'].indexOf(this.stream.security) !== -1;
+            return ['none'].indexOf(this.stream.security) !== -1;
         }
     }
 
@@ -1245,8 +1245,10 @@ class Inbound extends XrayCommonClass {
             }
         }
 
-        if (this.reality) {
-            params.set("flow", this.settings.vlesses[0].flow);
+        if (this.stream.security === 'reality') {
+            if (this.stream.network === 'tcp') {
+                params.set("flow", this.settings.vlesses[0].flow);
+            }
             if (!ObjectUtil.isArrEmpty(this.stream.reality.serverNames)) {
                 params.set("sni", this.stream.reality.serverNames.split(/,|，|\s+/)[0]);
             }
@@ -1344,8 +1346,19 @@ class Inbound extends XrayCommonClass {
                 params.set("sni", address);
             }
         }
-        if (this.reality) {
-            params.set("flow", this.settings.clients[0].flow);
+        if (this.stream.security === 'reality') {
+            if (!ObjectUtil.isArrEmpty(this.stream.reality.serverNames)) {
+                params.set("sni", this.stream.reality.serverNames.split(/,|，|\s+/)[0]);
+            }
+            if (this.stream.reality.publicKey != "") {
+                params.set("pbk", this.stream.reality.publicKey);
+            }
+            if (this.stream.reality.shortIds != "") {
+                params.set("sid", this.stream.reality.shortIds);
+            }
+            if (this.stream.reality.fingerprint != "") {
+                params.set("fp", this.stream.reality.fingerprint);
+            }
         }
         const link = `trojan://${settings.clients[0].password}@${address}:${port}`;
         const url = new URL(link);

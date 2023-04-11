@@ -102,18 +102,6 @@ More features are being planned...
 - Ubuntu 16+
 - Debian 8+
 
-## FAQ
-
-## Migrating from v2-ui
-
-First install the latest version of x-ui on the server where v2-ui is installed, then use the following command to migrate `all inbound account data` from v2-ui to x-ui, `panel settings and username and password will not be migrated`.
-
-> After successful migration, please ``shut down v2-ui`` and ``restart x-ui``, otherwise the inbound of v2-ui will have ``port conflict`` with the inbound of x-ui
-
-```
-x-ui v2-ui
-```
-
 ## Credits
 
 * vaxilu's x-ui project: https://github.com/vaxilu/x-ui

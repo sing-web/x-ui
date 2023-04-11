@@ -100,18 +100,6 @@ TG通知内容：
 - Ubuntu 16+
 - Debian 8+
 
-# 常见问题
-
-## 从 v2-ui 迁移
-
-首先在安装了 v2-ui 的服务器上安装最新版 x-ui，然后使用以下命令进行迁移，将迁移本机 v2-ui 的 `所有 inbound 账号数据`至 x-ui，`面板设置和用户名密码不会迁移`
-
-> 迁移成功后请 `关闭 v2-ui`并且 `重启 x-ui`，否则 v2-ui 的 inbound 会与 x-ui 的 inbound 会产生 `端口冲突`
-
-```
-x-ui v2-ui
-```
-
 ## 鸣谢
 
 * vaxilu 的 x-ui 项目：https://github.com/vaxilu/x-ui

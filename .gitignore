@@ -4,3 +4,4 @@ dist/
 x-ui/
 release.sh
 .sync*
+oryxBuildBinary

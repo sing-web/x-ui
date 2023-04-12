@@ -122,7 +122,7 @@ func (a *ServerController) getGeoipVersion(c *gin.Context) {
 func (a *ServerController) installGeoip(c *gin.Context) {
 	version := c.Param("version")
 	err := a.serverService.UpdateGeoip(version)
-	jsonMsg(c, "安装 geoip", err)
+	jsonMsg(c, "安装 Geoip", err)
 }
 
 func (a *ServerController) getGeositeVersion(c *gin.Context) {
@@ -147,5 +147,5 @@ func (a *ServerController) getGeositeVersion(c *gin.Context) {
 func (a *ServerController) installGeosite(c *gin.Context) {
 	version := c.Param("version")
 	err := a.serverService.UpdateGeosite(version)
-	jsonMsg(c, "安装 geosite", err)
+	jsonMsg(c, "安装 Geosite", err)
 }

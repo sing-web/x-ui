@@ -38,10 +38,15 @@
             <a-select-option v-for="key in TLS_VERSION_OPTION" :value="key">[[ key ]]</a-select-option>
         </a-select>
     </a-form-item>
-    <a-form-item label="alpn">
+    <a-form-item label="ALPN">
         <a-checkbox-group v-model="inbound.stream.tls.alpn" style="width:200px">
             <a-checkbox v-for="key in ALPN_OPTION" :value="key">[[ key ]]</a-checkbox>
         </a-checkbox-group>
+    </a-form-item>
+    <a-form-item label="uTLS 指纹" >
+        <a-select v-model="inbound.stream.tls.fingerprint" style="width: 135px">
+            <a-select-option v-for="key in UTLS_FINGERPRINT" :value="key">[[ key ]]</a-select-option>
+        </a-select>
     </a-form-item>
     <a-form-item label="证书">
         <a-radio-group v-model="inbound.stream.tls.certs[0].useFile"

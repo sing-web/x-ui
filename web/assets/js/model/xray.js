@@ -488,6 +488,7 @@ class TlsStreamSettings extends XrayCommonClass {
         minVersion = TLS_VERSION_OPTION.TLS12,
         maxVersion = TLS_VERSION_OPTION.TLS13,
         cipherSuites = '',
+        fingerprint = UTLS_FINGERPRINT.UTLS_CHROME,
         certificates = [new TlsStreamSettings.Cert()], alpn = ['']) {
         super();
         this.server = serverName;
@@ -495,6 +496,7 @@ class TlsStreamSettings extends XrayCommonClass {
         this.minVersion = minVersion;
         this.maxVersion = maxVersion;
         this.cipherSuites = cipherSuites;
+        this.fingerprint = fingerprint;
         this.certs = certificates;
         this.alpn = alpn;
     }
@@ -518,6 +520,7 @@ class TlsStreamSettings extends XrayCommonClass {
             json.minVersion,
             json.maxVersion,
             json.cipherSuites,
+            json.fingerprint,
             certs,
             json.alpn,
         );
@@ -530,6 +533,7 @@ class TlsStreamSettings extends XrayCommonClass {
             minVersion: this.minVersion,
             maxVersion: this.maxVersion,
             cipherSuites: this.cipherSuites,
+            fingerprint: this.fingerprint,
             certificates: TlsStreamSettings.toJsonArray(this.certs),
             alpn: this.alpn,
         };
@@ -585,21 +589,21 @@ TlsStreamSettings.Cert = class extends XrayCommonClass {
 
 class ReaLITyStreamSettings extends XrayCommonClass {
     constructor(
-        show = false, 
-        dest = "www.microsoft.com:443", 
+        show = false,
+        dest = "www.microsoft.com:443",
         xver = 0,
         fingerprint = UTLS_FINGERPRINT.UTLS_CHROME,
-        serverNames = 'www.microsoft.com', 
-        privateKey = RandomUtil.randomX25519PrivateKey(), 
+        serverNames = 'www.microsoft.com',
+        privateKey = RandomUtil.randomX25519PrivateKey(),
         publicKey = '',
-        minClientVer = "", 
-        maxClientVer = "", 
-        maxTimeDiff = 0, 
+        minClientVer = "",
+        maxClientVer = "",
+        maxTimeDiff = 0,
         shortIds = RandomUtil.randowShortId()
     ) {
         super();
         this.show = show;
-        this.dest = dest;        
+        this.dest = dest;
         this.xver = xver;
         this.fingerprint = fingerprint;
         this.serverNames = serverNames instanceof Array ? serverNames.join('\n') : serverNames;
@@ -644,15 +648,14 @@ class ReaLITyStreamSettings extends XrayCommonClass {
     }
 }
 
-
-class SockoptStreamSettings  extends XrayCommonClass {
+class SockoptStreamSettings extends XrayCommonClass {
     constructor(tcpFastOpen = false,
         domainStrategy = DOMAIN_STRATEGY.AsIs,
         tcpcongestion = '',
         acceptProxyProtocol = false,
         tcpKeepAliveIdle = 0,
         tcpKeepAliveInterval = 0,
-        _interface ="",
+        _interface = "",
     ) {
         super();
         this.tcpFastOpen = tcpFastOpen;
@@ -688,7 +691,6 @@ class SockoptStreamSettings  extends XrayCommonClass {
         };
     }
 }
-
 
 class StreamSettings extends XrayCommonClass {
     constructor(network = 'tcp',
@@ -741,16 +743,6 @@ class StreamSettings extends XrayCommonClass {
         }
     }
 
-    get isSockopt() {
-        return ['none'].indexOf(this.security) !== -1;
-    }
-
-    set isSockopt(isSockopt) {
-        if (isSockopt) {
-            return ['none'].indexOf(this.security) !== -1;
-        }
-    }
-
     static fromJson(json = {}) {
         return new StreamSettings(
             json.network,
@@ -780,7 +772,7 @@ class StreamSettings extends XrayCommonClass {
             httpSettings: network === 'http' ? this.http.toJson() : undefined,
             quicSettings: network === 'quic' ? this.quic.toJson() : undefined,
             grpcSettings: network === 'grpc' ? this.grpc.toJson() : undefined,
-            sockopt: this.isSockopt ? this.sockopt.toJson() : undefined,
+            sockopt: this.sockopt ? this.sockopt.toJson() : undefined,
         };
     }
 }
@@ -863,16 +855,6 @@ class Inbound extends XrayCommonClass {
             this.stream.security = 'none';
         }
 
-    }
-
-    get sockopt() {
-        return ['none'].indexOf(this.stream.security) !== -1;
-    }
-    
-    set sockopt(isSockopt) {
-        if (isSockopt) {
-            return ['none'].indexOf(this.stream.security) !== -1;
-        }
     }
 
     get network() {
@@ -1125,6 +1107,7 @@ class Inbound extends XrayCommonClass {
         let type = 'none';
         let host = '';
         let path = '';
+        let fingerprint = '';
         if (network === 'tcp') {
             let tcp = this.stream.tcp;
             type = tcp.type;
@@ -1163,6 +1146,9 @@ class Inbound extends XrayCommonClass {
             if (!ObjectUtil.isEmpty(this.stream.tls.server)) {
                 address = this.stream.tls.server;
             }
+            if (this.stream.tls.fingerprint != "") {
+                fingerprint = this.stream.reality.fingerprint
+            }
         }
 
         let obj = {
@@ -1177,6 +1163,7 @@ class Inbound extends XrayCommonClass {
             host: host,
             path: path,
             tls: this.stream.security,
+            fp: fingerprint,
         };
         return 'vmess://' + base64(JSON.stringify(obj, null, 2));
     }
@@ -1193,7 +1180,7 @@ class Inbound extends XrayCommonClass {
         } else {
             params.set("security", this.stream.security);
         }
-        
+
         switch (type) {
             case "tcp":
                 const tcp = this.stream.tcp;
@@ -1243,6 +1230,9 @@ class Inbound extends XrayCommonClass {
                 address = this.stream.tls.server;
                 params.set("sni", address);
                 params.set("flow", this.settings.vlesses[0].flow);
+            }
+            if (this.stream.tls.fingerprint != "") {
+                params.set("fp", this.stream.tls.fingerprint);
             }
         }
 
@@ -1345,6 +1335,9 @@ class Inbound extends XrayCommonClass {
             if (!ObjectUtil.isEmpty(this.stream.tls.server)) {
                 address = this.stream.tls.server;
                 params.set("sni", address);
+            }
+            if (this.stream.tls.fingerprint != "") {
+                params.set("fp", this.stream.tls.fingerprint);
             }
         }
         if (this.stream.security === 'reality') {

@@ -107,10 +107,11 @@ More features are being planned...
 * vaxilu's x-ui project: https://github.com/vaxilu/x-ui
 * qist's xray-ui project: https://github.com/qist/xray-ui
 * MHSanaei's 3x-ui project: https://github.com/MHSanaei/3x-ui
+* afdian: https://afdian.net/a/Misaka-blog
 
-## thanks
 
-afdian: https://afdian.net/a/Misaka-blog
+
+
 
 
 ## Disclaimer

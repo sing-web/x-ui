@@ -80,15 +80,15 @@
                                         v-model="allSetting.xrayTemplateConfig"></setting-list-item>
                                 </a-list>
                             </a-tab-pane>
-                            <a-tab-pane key="4" tab="Telegram提醒相关设置">
+                            <a-tab-pane key="4" tab="Telegram Bot 提醒相关设置">
                                 <a-list item-layout="horizontal" style="background: white">
-                                    <setting-list-item type="switch" title="启用电报机器人" desc="重启面板生效"
+                                    <setting-list-item type="switch" title="启用Telegram Bot" desc="重启面板生效"
                                         v-model="allSetting.tgBotEnable"></setting-list-item>
-                                    <setting-list-item type="text" title="电报机器人Token" desc="重启面板生效"
+                                    <setting-list-item type="text" title="Telegram Bot Token" desc="可在 @BotFather 生成"
                                         v-model="allSetting.tgBotToken"></setting-list-item>
-                                    <setting-list-item type="number" title="电报机器人ChatId" desc="重启面板生效"
+                                    <setting-list-item type="number" title="Telegram Bot ChatId" desc="可在 @userinfobot 生成"
                                         v-model.number="allSetting.tgBotChatId"></setting-list-item>
-                                    <setting-list-item type="text" title="电报机器人通知时间" desc="采用Crontab定时格式,重启面板生效"
+                                    <setting-list-item type="text" title="Telegram Bot 通知时间" desc="采用 Crontab 定时格式"
                                         v-model="allSetting.tgRunTime"></setting-list-item>
                                 </a-list>
                             </a-tab-pane>

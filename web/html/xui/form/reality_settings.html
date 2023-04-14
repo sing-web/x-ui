@@ -38,16 +38,16 @@
     <a-form-item label="公钥">
         <a-input v-model.trim="inbound.stream.reality.publicKey" style="width: 350px"></a-input>
     </a-form-item>
-    <a-form-item label="minClientVer">
+    <a-form-item label="客户端 xray 允许最低版本">
         <a-input v-model.trim="inbound.stream.reality.minClientVer"></a-input>
     </a-form-item>
-    <a-form-item label="maxClientVer">
+    <a-form-item label="客户端 xray 允许最高版本">
         <a-input v-model.trim="inbound.stream.reality.maxClientVer"></a-input>
     </a-form-item>
-    <a-form-item label="maxTimeDiff">
+    <a-form-item label="最大时间差">
         <a-input v-model.number="inbound.stream.reality.maxTimeDiff"></a-input>
     </a-form-item>
-    <a-form-item label="shortIds">
+    <a-form-item label="shortId">
         <a-input type="textarea" :rows="2" v-model="inbound.stream.reality.shortIds" style="width: 165px"></a-input>
     </a-form-item>
 </a-form>

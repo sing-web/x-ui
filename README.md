@@ -108,11 +108,10 @@ More features are being planned...
 * qist's xray-ui project: https://github.com/qist/xray-ui
 * MHSanaei's 3x-ui project: https://github.com/MHSanaei/3x-ui
 
-## Sponsorship
+## thanks
 
 afdian: https://afdian.net/a/Misaka-blog
 
-![afdian-MisakaNo の 小破站](https://user-images.githubusercontent.com/122191366/211533469-351009fb-9ae8-4601-992a-abbf54665b68.jpg)
 
 ## Disclaimer
 

@@ -52,7 +52,7 @@ jobs:
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
       - name: package
-        run: tar -zcvf x-ui-linux-amd64.tar.gz x-ui
+        run: tar -zcvf x-ui-linux-amd64.tar.gz dist
       - name: upload
         uses: actions/upload-release-asset@v1
         env:
@@ -93,7 +93,7 @@ jobs:
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
       - name: package
-        run: tar -zcvf x-ui-linux-arm64.tar.gz x-ui
+        run: tar -zcvf x-ui-linux-arm64.tar.gz dist
       - name: upload
         uses: actions/upload-release-asset@v1
         env:
@@ -133,7 +133,7 @@ jobs:
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
           mv xray xray-linux-s390x
       - name: package
-        run: tar -zcvf x-ui-linux-s390x.tar.gz x-ui
+        run: tar -zcvf x-ui-linux-s390x.tar.gz dist
       - name: upload
         uses: actions/upload-release-asset@v1
         env:

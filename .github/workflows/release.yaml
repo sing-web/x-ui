@@ -38,12 +38,12 @@ jobs:
           apt-get update
           apt install -y sudo curl wget unzip ca-certificates build-essential
           CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o x-ui -v main.go
-          mkdir dist
-          cp x-ui dist/x-ui
-          cp x-ui.service dist/x-ui.service
-          cp x-ui.sh dist/x-ui.sh
-          mkdir dist/bin
-          cd dist/bin
+          mkdir dist/x-ui
+          cp x-ui dist/x-ui/x-ui
+          cp x-ui.service dist/x-ui/x-ui.service
+          cp x-ui.sh dist/x-ui/x-ui.sh
+          mkdir dist/x-ui/bin
+          cd dist/x-ui/bin
           wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
           unzip Xray-linux-64.zip
           rm -f Xray-linux-64.zip
@@ -52,7 +52,7 @@ jobs:
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
       - name: package
-        run: tar -zcvf x-ui-linux-amd64.tar.gz dist
+        run: tar -zcvf x-ui-linux-amd64.tar.gz dist/x-ui
       - name: upload
         uses: actions/upload-release-asset@v1
         env:
@@ -79,12 +79,12 @@ jobs:
           apt-get update
           apt install -y sudo curl wget unzip ca-certificates gcc-aarch64-linux-gnu
           CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=aarch64-linux-gnu-gcc go build -o x-ui -v main.go
-          mkdir dist
-          cp x-ui dist/x-ui
-          cp x-ui.service dist/x-ui.service
-          cp x-ui.sh dist/x-ui.sh
-          mkdir dist/bin
-          cd dist/bin
+          mkdir dist/x-ui
+          cp x-ui dist/x-ui/x-ui
+          cp x-ui.service dist/x-ui/x-ui.service
+          cp x-ui.sh dist/x-ui/x-ui.sh
+          mkdir dist/x-ui/bin
+          cd dist/x-ui/bin
           wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-arm64-v8a.zip
           unzip Xray-linux-arm64-v8a.zip
           rm -f Xray-linux-arm64-v8a.zip
@@ -93,7 +93,7 @@ jobs:
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
       - name: package
-        run: tar -zcvf x-ui-linux-arm64.tar.gz dist
+        run: tar -zcvf x-ui-linux-arm64.tar.gz dist/x-ui
       - name: upload
         uses: actions/upload-release-asset@v1
         env:
@@ -120,12 +120,12 @@ jobs:
           apt-get update
           apt install -y sudo curl wget unzip ca-certificates gcc-s390x-linux-gnu
           CGO_ENABLED=1 GOOS=linux GOARCH=s390x CC=s390x-linux-gnu-gcc go build -o x-ui -v main.go
-          mkdir dist
-          cp x-ui dist/x-ui
-          cp x-ui.service dist/x-ui.service
-          cp x-ui.sh dist/x-ui.sh
-          mkdir dist/bin
-          cd dist/bin
+          mkdir dist/x-ui
+          cp x-ui dist/x-ui/x-ui
+          cp x-ui.service dist/x-ui/x-ui.service
+          cp x-ui.sh dist/x-ui/x-ui.sh
+          mkdir dist/x-ui/bin
+          cd dist/x-ui/bin
           wget https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-s390x.zip
           unzip Xray-linux-s390x.zip
           rm -f Xray-linux-s390x.zip geoip.dat geosite.dat
@@ -133,7 +133,7 @@ jobs:
           wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
           mv xray xray-linux-s390x
       - name: package
-        run: tar -zcvf x-ui-linux-s390x.tar.gz dist
+        run: tar -zcvf x-ui-linux-s390x.tar.gz dist/x-ui
       - name: upload
         uses: actions/upload-release-asset@v1
         env:

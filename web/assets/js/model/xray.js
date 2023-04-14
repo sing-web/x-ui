@@ -1164,6 +1164,7 @@ class Inbound extends XrayCommonClass {
             path: path,
             tls: this.stream.security,
             sni: host,
+            alpn: this.stream.tls.alpn.join(','),
             fp: fingerprint,
         };
         return 'vmess://' + base64(JSON.stringify(obj, null, 2));
@@ -1227,6 +1228,7 @@ class Inbound extends XrayCommonClass {
         }
 
         if (this.stream.security === 'tls') {
+            params.set("alpn", this.stream.tls.alpn);
             if (!ObjectUtil.isEmpty(this.stream.tls.server)) {
                 address = this.stream.tls.server;
                 params.set("sni", address);
@@ -1333,6 +1335,7 @@ class Inbound extends XrayCommonClass {
         }
 
         if (this.stream.security === 'tls') {
+            params.set("alpn", this.stream.tls.alpn);
             if (!ObjectUtil.isEmpty(this.stream.tls.server)) {
                 address = this.stream.tls.server;
                 params.set("sni", address);

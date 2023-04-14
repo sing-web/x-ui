@@ -1,7 +1,7 @@
 {{define "inboundModal"}}
 <a-modal id="inbound-modal" v-model="inModal.visible" :title="inModal.title" @ok="inModal.ok"
-         :confirm-loading="inModal.confirmLoading" :closable="true" :mask-closable="false"
-         :ok-text="inModal.okText" cancel-text='{{ i18n "close" }}'>
+    :confirm-loading="inModal.confirmLoading" :closable="true" :mask-closable="false" :ok-text="inModal.okText"
+    cancel-text='{{ i18n "close" }}'>
     {{template "form/inbound"}}
 </a-modal>
 <script>
@@ -17,7 +17,7 @@
         ok() {
             ObjectUtil.execute(inModal.confirm, inModal.inbound, inModal.dbInbound);
         },
-        show({ title='', okText='确定', inbound=null, dbInbound=null, confirm=(inbound, dbInbound)=>{} }) {
+        show({ title = '', okText = '确定', inbound = null, dbInbound = null, confirm = (inbound, dbInbound) => { } }) {
             this.title = title;
             this.okText = okText;
             if (inbound) {

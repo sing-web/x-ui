@@ -503,10 +503,9 @@ show_menu() {
   ${GREEN}15.${PLAIN} Install bbr with one click (latest kernel)
   ${GREEN}16.${PLAIN} Apply SSL certificate with one click (acme application)
   ${GREEN}17.${PLAIN} One click to release all network ports
-  ${GREEN}18.${PLAIN} REALITY public-private key and shortId generation
  "
     show_status
-    echo && read -p "Please enter your choice [0-18]. " num
+    echo && read -p "Please enter your choice [0-17]: " num
 
     case "${num}" in
     0)
@@ -562,9 +561,6 @@ show_menu() {
         ;;
     17)
         open_ports
-        ;;
-    18) 
-        x25519
         ;;
     *)
         LOGE "Please enter the correct number [0-18]"

@@ -1163,6 +1163,7 @@ class Inbound extends XrayCommonClass {
             host: host,
             path: path,
             tls: this.stream.security,
+            sni: host,
             fp: fingerprint,
         };
         return 'vmess://' + base64(JSON.stringify(obj, null, 2));

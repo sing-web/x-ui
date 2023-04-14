@@ -435,31 +435,6 @@ open_ports(){
     green "所有端口已放行成功！"
 }
 
-x25519() {
-    arch=$(arch)
-    if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
-        arch="amd64"
-    elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
-        arch="arm64"
-    elif [[ $arch == "s390x" ]]; then
-        arch="s390x"
-    else
-        arch="amd64"
-    fi
-    
-    keys=$(/usr/local/x-ui/bin/xray-linux-${arch} x25519)
-    public_key=$(echo $keys | awk -F " " '{print $6}')
-    private_key=$(echo $keys | awk -F " " '{print $3}')
-    short_id=$(openssl rand -hex 8)
-    green "xray Reality 的公私钥、shortId 已生成成功！"
-    yellow "请将此内容保存备用，以便创建 Reality 节点使用"
-    red "公钥：$public_key"
-    red "私钥：$private_key"
-    red "shortId：$short_id"
-    echo ""
-    before_show_menu
-}
-
 show_usage() {
     echo "x-ui 管理脚本使用方法: "
     echo "------------------------------------------"
@@ -503,10 +478,9 @@ show_menu() {
   ${GREEN}15.${PLAIN} 一键安装 bbr (最新内核)
   ${GREEN}16.${PLAIN} 一键申请 SSL 证书 (acme申请)
   ${GREEN}17.${PLAIN} 一键放开所有网络端口
-  ${GREEN}18.${PLAIN} REALITY 公私钥及 shortId 生成
  "
     show_status
-    echo && read -p "请输入选择 [0-18]: " num
+    echo && read -p "请输入选择 [0-17]: " num
 
     case "${num}" in
     0)
@@ -563,11 +537,8 @@ show_menu() {
     17)
         open_ports
         ;;
-    18) 
-        x25519
-        ;;
     *)
-        LOGE "请输入正确的数字 [0-18]"
+        LOGE "请输入正确的数字 [0-17]"
         ;;
     esac
 }

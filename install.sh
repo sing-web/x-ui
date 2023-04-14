@@ -87,18 +87,18 @@ config_after_install() {
     echo -e "${yellow}For security reasons, you need to force a port and account password change after the installation/update is complete ${plain}"
     read -p "Confirmation to continue? [y/n]: " config_confirm
     if [[ x"${config_confirm}" == x"y" || x"${config_confirm}" == x"Y" ]]; then
-        read -p "Please set your account name (8 random characters if not filled in):" config_account
+        read -p "Please set your account name (8 random characters if not filled in): " config_account
         [[ -z $config_account ]] && config_account=$(date +%s%N | md5sum | cut -c 1-8)
         echo -e "${yellow} your account name will be set to: ${config_account}${plain}"
-        read -p "Please set your account password (8 random characters if not filled in):" config_password
+        read -p "Please set your account password (8 random characters if not filled in): " config_password
         [[ -z $config_password ]] && config_password=$(date +%s%N | md5sum | cut -c 1-8)
         echo -e "${yellow} your account password will be set to:${config_password}${plain}"
-        read -p "Please set the panel access port (or random port number if not filled in):" config_port
+        read -p "Please set the panel access port (or random port number if not filled in): " config_port
         [[ -z $config_port ]] && config_port=$(shuf -i 2000-65535 -n 1)
         until [[ -z $(ss -ntlp | awk '{print $4}' | sed 's/.*://g' | grep -w "$port") ]]; do
             if [[ -n $(ss -ntlp | awk '{print $4}' | sed 's/.*://g' | grep -w "$port") ]]; then
                 echo -e "${red} $config_port ${plain} The port is already occupied by another program, please change the panel port number"
-                read -p "Please set the panel access port (or random port number if not filled in):" config_port
+                read -p "Please set the panel access port (or random port number if not filled in): " config_port
                 [[ -z $config_port ]] && config_port=$(shuf -i 2000-65535 -n 1)
             fi
         done

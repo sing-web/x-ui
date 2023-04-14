@@ -46,6 +46,8 @@ func (a *ServerController) initRouter(g *gin.RouterGroup) {
 	g.Use(a.checkLogin)
 	g.POST("/status", a.status)
 	g.POST("/getXrayVersion", a.getXrayVersion)
+	g.POST("/stopXrayService", a.stopXrayService)
+	g.POST("/restartXrayService", a.restartXrayService)
 	g.POST("/installXray/:version", a.installXray)
 	g.POST("/getGeoipVersion", a.getGeoipVersion)
 	g.POST("/installGeoip/:version", a.installGeoip)
@@ -92,6 +94,26 @@ func (a *ServerController) getXrayVersion(c *gin.Context) {
 	a.lastGetVersionsTime = time.Now()
 
 	jsonObj(c, versions, nil)
+}
+
+func (a *ServerController) stopXrayService(c *gin.Context) {
+	a.lastGetStatusTime = time.Now()
+	err := a.serverService.StopXrayService()
+	if err != nil {
+		jsonMsg(c, "", err)
+		return
+	}
+	jsonMsg(c, "Xray stoped", err)
+
+}
+func (a *ServerController) restartXrayService(c *gin.Context) {
+	err := a.serverService.RestartXrayService()
+	if err != nil {
+		jsonMsg(c, "", err)
+		return
+	}
+	jsonMsg(c, "Xray restarted", err)
+
 }
 
 func (a *ServerController) installXray(c *gin.Context) {

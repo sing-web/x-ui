@@ -20,7 +20,7 @@ Multi-protocol, multi-user xray panel support
 # Installation & Upgrade
 
 ```
-bash <(wget -qO- https://raw.githubusercontent.com/sing-web/x-ui/main/install.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/enillidan/x-ui/main/install.sh)
 ```
 
 ## Manual installation & upgrade

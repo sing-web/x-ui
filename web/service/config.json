@@ -92,40 +92,11 @@
         "type": "field"
       },
       {
-        "ip": [
-          "geoip:private",
-          "geoip:cn"
-        ],
-        "outboundTag": "blocked",
-        "type": "field"
-      },
-      {
         "outboundTag": "blocked",
         "protocol": [
           "bittorrent"
         ],
         "type": "field"
-      },
-      {
-        "type": "field",
-        "outboundTag": "socks5-warp",
-        "domain": [
-          "ip.gs"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "wireguard-warp",
-        "domain": [
-          "chat.openai.com"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "ipv6-out",
-        "domain": [
-          "ipget.net"
-        ]
       },
       {
         "type": "field",

@@ -18,7 +18,7 @@
 # 安装 & 升级
 
 ```
-bash <(wget -qO- https://raw.githubusercontent.com/sing-web/x-ui/main/install_CN.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/enillidan/x-ui/main/install_CN.sh)
 ```
 
 ## 手动安装&升级
@@ -105,12 +105,10 @@ TG通知内容：
 * vaxilu 的 x-ui 项目：https://github.com/vaxilu/x-ui
 * qist 的 xray-ui 项目：https://github.com/qist/xray-ui
 * MHSanaei 的 3x-ui 项目：https://github.com/MHSanaei/3x-ui
+* 爱发电：https://afdian.net/a/Misaka-blog
 
 ## 赞助
 
-爱发电：https://afdian.net/a/Misaka-blog
-
-![afdian-MisakaNo の 小破站](https://user-images.githubusercontent.com/122191366/211533469-351009fb-9ae8-4601-992a-abbf54665b68.jpg)
 
 ## 免责声明
 

@@ -24,7 +24,7 @@
     <a-form-item label="xver">
         <a-input v-model.number="inbound.stream.reality.xver"></a-input>
     </a-form-item>
-    <a-form-item label="uTLS 指纹" >
+    <a-form-item label="uTLS 指纹">
         <a-select v-model="inbound.stream.reality.fingerprint" style="width: 135px">
             <a-select-option v-for="key in UTLS_FINGERPRINT" :value="key">[[ key ]]</a-select-option>
         </a-select>

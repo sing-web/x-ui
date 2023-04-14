@@ -87,18 +87,18 @@ config_after_install() {
     echo -e "${yellow}出于安全考虑，安装/更新完成后需要强制修改端口与账户密码${plain}"
     read -p "确认是否继续? [y/n]: " config_confirm
     if [[ x"${config_confirm}" == x"y" || x"${config_confirm}" == x"Y" ]]; then
-        read -p "请设置您的账户名（如未填写则随机8位字符）:" config_account
+        read -p "请设置您的账户名（如未填写则随机8位字符）: " config_account
         [[ -z $config_account ]] && config_account=$(date +%s%N | md5sum | cut -c 1-8)
         echo -e "${yellow}您的账户名将设定为:${config_account}${plain}"
-        read -p "请设置您的账户密码（如未填写则随机8位字符）:" config_password
+        read -p "请设置您的账户密码（如未填写则随机8位字符）: " config_password
         [[ -z $config_password ]] && config_password=$(date +%s%N | md5sum | cut -c 1-8)
         echo -e "${yellow}您的账户密码将设定为:${config_password}${plain}"
-        read -p "请设置面板访问端口（如未填写则随机端口号）:" config_port
+        read -p "请设置面板访问端口（如未填写则随机端口号）: " config_port
         [[ -z $config_port ]] && config_port=$(shuf -i 2000-65535 -n 1)
         until [[ -z $(ss -ntlp | awk '{print $4}' | sed 's/.*://g' | grep -w "$port") ]]; do
             if [[ -n $(ss -ntlp | awk '{print $4}' | sed 's/.*://g' | grep -w "$port") ]]; then
                 echo -e "${red} $config_port ${plain} 端口已经其他程序占用，请更换面板端口号"
-                read -p "请设置面板访问端口（如未填写则随机端口号）:" config_port
+                read -p "请设置面板访问端口（如未填写则随机端口号）: " config_port
                 [[ -z $config_port ]] && config_port=$(shuf -i 2000-65535 -n 1)
             fi
         done

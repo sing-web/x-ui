@@ -106,7 +106,7 @@ before_show_menu() {
 }
 
 install() {
-    bash <(curl -Ls https://raw.githubusercontent.com/sing-web/x-ui/master/install.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/enillidan/x-ui/master/install.sh)
     if [[ $? == 0 ]]; then
         if [[ $# == 0 ]]; then
             start
@@ -125,7 +125,7 @@ update() {
         fi
         return 0
     fi
-    bash <(curl -Ls https://raw.githubusercontent.com/sing-web/x-ui/master/install.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/enillidan/x-ui/master/install.sh)
     if [[ $? == 0 ]]; then
         LOGI "The update is complete and the panel has been automatically restarted"
         exit 0
@@ -309,7 +309,7 @@ install_bbr() {
 }
 
 update_shell() {
-    wget -O /usr/bin/x-ui -N --no-check-certificate https://github.com/sing-web/x-ui/raw/master/x-ui.sh
+    wget -O /usr/bin/x-ui -N --no-check-certificate https://github.com/enillidan/x-ui/raw/master/x-ui.sh
     if [[ $? != 0 ]]; then
         echo ""
         LOGE "Download script failed, please check if you can connect to Github on your local machine"

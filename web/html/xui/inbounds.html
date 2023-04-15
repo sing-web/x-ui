@@ -156,7 +156,7 @@
             dataIndex: "port",
             width: 60,
         }, {
-            title: "流量↑|↓",
+            title: "流量 ↑|↓",
             align: 'center',
             width: 150,
             scopedSlots: { customRender: 'traffic' },
@@ -316,7 +316,7 @@
                 resetAllTraffic() {
                     this.$confirm({
                         title: '重置所有流量',
-                        content: '确定要重置所有节点流量吗?',
+                        content: '确定要重置所有节点的流量吗?',
                         okText: '重置',
                         cancelText: '取消',
                         onOk: async () => {

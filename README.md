@@ -78,9 +78,9 @@ X-UI supports daily traffic notification and panel login reminder via Tg bot.
 The specific application tutorial can be found in [blog link](https://coderfan.net/how-to-use-telegram-bot-to-alarm-you-when-someone-login-into-your-vps.html)
 Instructions:Set the bot-related parameters in the background of the panel, including
 
-- Tg Robot Token
-- Tg bot ChatId
-- Tg robot cycle running time, using crontab syntax  
+- Tg Bot Token
+- Tg Bot ChatId
+- Tg Bot cycle running time, using crontab syntax  
 
 Reference syntax:
 - 30 * * * * * * //notify on the 30ths of every minute
@@ -110,7 +110,7 @@ More features are being planned...
 
 ## Sponsorship
 
-afdian: https://afdian.net/a/Misaka-blog
+afdian (for China mainland): https://afdian.net/a/Misaka-blog
 
 ![afdian-MisakaNo の 小破站](https://user-images.githubusercontent.com/122191366/211533469-351009fb-9ae8-4601-992a-abbf54665b68.jpg)
 

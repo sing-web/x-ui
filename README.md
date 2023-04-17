@@ -7,7 +7,7 @@ Multi-protocol, multi-user xray panel support
 # Features
 
 - System status monitoring
-- Support multi-user multi-protocol, web visualization operation
+- Support multi-user multi-protocol, multi-user on same port, web visualization operation
 - Supported protocols: vmess, vless, trojan, shadowsocks, dokodemo-door, socks, http
 - Support vless / trojan reality
 - Support for configuring more transport configurations

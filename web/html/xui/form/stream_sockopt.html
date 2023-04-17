@@ -21,7 +21,7 @@
             <a-select-option :value="true">true</a-select-option> -->
                 </a-switch>
             </a-form-item>
-            <a-form-item label="domainStrategy">
+            <a-form-item label="域名解析策略">
                 <a-select v-model="inbound.stream.sockopt.domainStrategy" style="width:200px">
                     <a-select-option v-for="key in DOMAIN_STRATEGY" :value="key">[[ key ]]</a-select-option>
                     </a-se-chlect>
@@ -32,15 +32,15 @@
             <a-select-option :value="true">true</a-select-option> -->
                 </a-switch>
             </a-form-item>
-            <a-form-item label="tcpKeepAliveInterval">
+            <a-form-item label="TCP 保持活跃数据包发送间隔">
                 <a-input v-model.number="inbound.stream.sockopt.tcpKeepAliveInterval" style="width: 165px;">
                 </a-input>
             </a-form-item>
-            <a-form-item label="tcpKeepAliveIdle">
+            <a-form-item label="TCP 空闲时间阈值">
                 <a-input v-model.number="inbound.stream.sockopt.tcpKeepAliveIdle" style="width: 165px;">
                 </a-input>
             </a-form-item>
-            <a-form-item label="tcpcongestion">
+            <a-form-item label="TCP 拥塞控制算法">
                 <a-select v-model="inbound.stream.sockopt.tcpcongestion" style="width:200px">
                     <a-select-option value="">系统默认</a-select-option>
                     <a-select-option v-for="key in TCP_CONGESTION" :value="key">[[ key ]]</a-select-option>

@@ -5,7 +5,7 @@
 # 功能介绍
 
 - 系统状态监控
-- 支持多用户多协议，网页可视化操作
+- 支持多用户多协议，单端口多用户，网页可视化操作
 - 支持的协议：vmess、vless、trojan、shadowsocks、dokodemo-door、socks、http
 - 支持 vless / trojan reality
 - 支持配置更多传输配置

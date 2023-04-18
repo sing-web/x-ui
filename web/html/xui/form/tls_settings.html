@@ -5,7 +5,7 @@
         <a-switch v-model="inbound.tls">
         </a-switch>
     </a-form-item>
-    <a-form-item v-if="inbound.canEnableReaLITy()" label="reality">
+    <a-form-item v-if="inbound.canEnableReality()" label="reality">
         <a-switch v-model="inbound.reality"></a-switch>
         <a-tooltip>
             <template slot="title">
@@ -62,7 +62,7 @@
         </a-radio-group>
     </a-form-item>
     <template v-if="inbound.stream.tls.certs[0].useFile">
-        <a-form-item label="ocspStapling">
+        <a-form-item label="OCSP stapling">
             <a-input v-model.number="inbound.stream.tls.certs[0].ocspStapling"></a-input>
         </a-form-item>
         <a-form-item label="公钥文件路径">

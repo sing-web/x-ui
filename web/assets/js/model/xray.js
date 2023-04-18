@@ -44,7 +44,7 @@ const RULE_DOMAIN = {
 };
 
 const FLOW_VISION = {
-    FLOWVISION: "xtls-rprx-vision",
+    RPRXVISION: "xtls-rprx-vision"
 }
 
 const TLS_VERSION_OPTION = {
@@ -587,12 +587,12 @@ TlsStreamSettings.Cert = class extends XrayCommonClass {
     }
 };
 
-class ReaLITyStreamSettings extends XrayCommonClass {
+class RealityStreamSettings extends XrayCommonClass {
     constructor(
         show = false,
         dest = "www.microsoft.com:443",
         xver = 0,
-        fingerprint = UTLS_FINGERPRINT.UTLS_CHROME,
+        fingerprint = UTLS_FINGERPRINT.UTLS_RANDOM,
         serverNames = 'www.microsoft.com',
         privateKey = RandomUtil.randomX25519PrivateKey(),
         publicKey = '',
@@ -616,7 +616,7 @@ class ReaLITyStreamSettings extends XrayCommonClass {
     }
 
     static fromJson(json = {}) {
-        return new ReaLITyStreamSettings(
+        return new RealityStreamSettings(
             json.show,
             json.dest,
             json.xver,
@@ -696,7 +696,7 @@ class StreamSettings extends XrayCommonClass {
     constructor(network = 'tcp',
         security = 'none',
         tlsSettings = new TlsStreamSettings(),
-        realitySettings = new ReaLITyStreamSettings(),
+        realitySettings = new RealityStreamSettings(),
         tcpSettings = new TcpStreamSettings(),
         kcpSettings = new KcpStreamSettings(),
         wsSettings = new WsStreamSettings(),
@@ -731,12 +731,12 @@ class StreamSettings extends XrayCommonClass {
         }
     }
 
-    get isReaLITy() {
+    get isReality() {
         return this.security === "reality";
     }
 
-    set isReaLITy(isReaLITy) {
-        if (isReaLITy) {
+    set isReality(isReality) {
+        if (isReality) {
             this.security = 'reality';
         } else {
             this.security = 'none';
@@ -748,7 +748,7 @@ class StreamSettings extends XrayCommonClass {
             json.network,
             json.security,
             TlsStreamSettings.fromJson(json.tlsSettings),
-            ReaLITyStreamSettings.fromJson(json.realitySettings),
+            RealityStreamSettings.fromJson(json.realitySettings),
             TcpStreamSettings.fromJson(json.tcpSettings),
             KcpStreamSettings.fromJson(json.kcpSettings),
             WsStreamSettings.fromJson(json.wsSettings),
@@ -765,7 +765,7 @@ class StreamSettings extends XrayCommonClass {
             network: network,
             security: this.security,
             tlsSettings: this.isTls ? this.tls.toJson() : undefined,
-            realitySettings: this.isReaLITy ? this.reality.toJson() : undefined,
+            realitySettings: this.isReality ? this.reality.toJson() : undefined,
             tcpSettings: network === 'tcp' ? this.tcp.toJson() : undefined,
             kcpSettings: network === 'kcp' ? this.kcp.toJson() : undefined,
             wsSettings: network === 'ws' ? this.ws.toJson() : undefined,
@@ -848,8 +848,8 @@ class Inbound extends XrayCommonClass {
         return this.stream.security === 'reality';
     }
 
-    set reality(isReaLITy) {
-        if (isReaLITy) {
+    set reality(isReality) {
+        if (isReality) {
             this.stream.security = 'reality';
         } else {
             this.stream.security = 'none';
@@ -908,16 +908,6 @@ class Inbound extends XrayCommonClass {
                 return this.settings.vlesses[0].flow;
             case Protocols.TROJAN:
                 return this.settings.clients[0].flow;
-            default:
-                return "";
-        }
-    }
-
-    // VMess
-    get alterId() {
-        switch (this.protocol) {
-            case Protocols.VMESS:
-                return this.settings.vmesses[0].alterId;
             default:
                 return "";
         }
@@ -1039,7 +1029,7 @@ class Inbound extends XrayCommonClass {
         return this.canEnableTls();
     }
 
-    canEnableReaLITy() {
+    canEnableReality() {
         switch (this.protocol) {
             case Protocols.VLESS:
             case Protocols.TROJAN:
@@ -1157,7 +1147,7 @@ class Inbound extends XrayCommonClass {
             add: address,
             port: this.port,
             id: this.settings.vmesses[0].id,
-            aid: this.settings.vmesses[0].alterId,
+            aid: 0,
             net: network,
             type: type,
             host: host,
@@ -1482,16 +1472,14 @@ Inbound.VmessSettings = class extends Inbound.Settings {
     }
 };
 Inbound.VmessSettings.Vmess = class extends XrayCommonClass {
-    constructor(id = RandomUtil.randomUUID(), alterId = 0) {
+    constructor(id = RandomUtil.randomUUID()) {
         super();
         this.id = id;
-        this.alterId = alterId;
     }
 
     static fromJson(json = {}) {
         return new Inbound.VmessSettings.Vmess(
             json.id,
-            json.alterId,
         );
     }
 };

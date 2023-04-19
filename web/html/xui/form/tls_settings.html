@@ -21,39 +21,42 @@
     <a-form-item label="域名">
         <a-input v-model.trim="inbound.stream.tls.server"></a-input>
     </a-form-item>
-    <a-form-item label="rejectUnknownSni">
+    <a-form-item label="服务端接收的 SNI 与证书域名不匹配则拒绝 TLS 握手">
         <a-switch v-model="inbound.stream.tls.rejectUnknownSni">
             <!-- <a-select-option :value="false">false</a-select-option>
             <a-select-option :value="true">true</a-select-option> -->
         </a-switch>
     </a-form-item>
-    <a-form-item label="CipherSuites">
+    <a-form-item label="密码套件">
         <a-select v-model="inbound.stream.tls.cipherSuites" style="width: 350px">
             <a-select-option value="">auto</a-select-option>
             <a-select-option v-for="key in TLS_CIPHER_OPTION" :value="key">[[ key ]]</a-select-option>
         </a-select>
     </a-form-item>
-    <a-form-item label="MinVersion">
+    <a-form-item label="允许 TLS 最低版本">
         <a-select v-model="inbound.stream.tls.minVersion" style="width: 60px"
             :dropdown-class-name="siderDrawer.isDarkTheme ? 'ant-card-dark' : ''">
             <a-select-option v-for="key in TLS_VERSION_OPTION" :value="key">[[ key ]]</a-select-option>
         </a-select>
     </a-form-item>
-    <a-form-item label="MaxVersion">
+    <a-form-item label="允许 TLS 最高版本">
         <a-select v-model="inbound.stream.tls.maxVersion" style="width: 60px"
             :dropdown-class-name="siderDrawer.isDarkTheme ? 'ant-card-dark' : ''">
             <a-select-option v-for="key in TLS_VERSION_OPTION" :value="key">[[ key ]]</a-select-option>
+        </a-select>
+    </a-form-item>
+    <a-form-item label="允许不安全连接">
+        <a-switch v-model="inbound.stream.tls.allowInsecure"></a-switch>
+    </a-form-item>
+    <a-form-item label="uTLS 指纹">
+        <a-select v-model="inbound.stream.tls.fingerprint" style="width: 135px">
+            <a-select-option v-for="key in UTLS_FINGERPRINT" :value="key">[[ key ]]</a-select-option>
         </a-select>
     </a-form-item>
     <a-form-item label="ALPN">
         <a-checkbox-group v-model="inbound.stream.tls.alpn" style="width:200px">
             <a-checkbox v-for="key in ALPN_OPTION" :value="key">[[ key ]]</a-checkbox>
         </a-checkbox-group>
-    </a-form-item>
-    <a-form-item label="uTLS 指纹">
-        <a-select v-model="inbound.stream.tls.fingerprint" style="width: 135px">
-            <a-select-option v-for="key in UTLS_FINGERPRINT" :value="key">[[ key ]]</a-select-option>
-        </a-select>
     </a-form-item>
     <a-form-item label="证书">
         <a-radio-group v-model="inbound.stream.tls.certs[0].useFile" button-style="solid">

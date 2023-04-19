@@ -33,7 +33,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.20.3
+          go-version: stable
       - name: build linux amd64 version
         run: |
           apt-get update
@@ -78,7 +78,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.20.3
+          go-version: stable
       - name: build linux arm64 version
         run: |
           apt-get update
@@ -123,7 +123,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.20.3
+          go-version: stable
       - name: build linux s390x version
         run: |
           apt-get update

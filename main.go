@@ -109,9 +109,9 @@ func showSetting(show bool) {
 			fmt.Println("current username or password is empty")
 		}
 		fmt.Println("当前面板信息设置如下:")
-		fmt.Println("登录用户名:", username)
-		fmt.Println("登录密码:", userpasswd)
-		fmt.Println("登录端口:", port)
+		fmt.Println("用户名:", username)
+		fmt.Println("密码:", userpasswd)
+		fmt.Println("端口:", port)
 	}
 }
 
@@ -175,7 +175,7 @@ func updateTgbotSetting(tgBotToken string, tgBotChatid int, tgBotRuntime string)
 	}
 }
 
-func updateSetting(port int, username string, password string) {
+func updateSetting(port int, username string, password string, listen string) {
 	err := database.InitDB(config.GetDBPath())
 	if err != nil {
 		fmt.Println(err)
@@ -192,6 +192,16 @@ func updateSetting(port int, username string, password string) {
 			fmt.Printf("set port %v success", port)
 		}
 	}
+
+	if listen != "" {
+		err := settingService.SetListen(listen)
+		if err != nil {
+			fmt.Println("set listen failed:", err)
+		} else {
+			fmt.Printf("set listen %v success", listen)
+		}
+	}
+
 	if username != "" || password != "" {
 		userService := service.UserService{}
 		err := userService.UpdateFirstUser(username, password)
@@ -216,6 +226,7 @@ func main() {
 
 	settingCmd := flag.NewFlagSet("setting", flag.ExitOnError)
 	var port int
+	var listen string
 	var username string
 	var password string
 	var tgbottoken string
@@ -227,6 +238,7 @@ func main() {
 	settingCmd.BoolVar(&reset, "reset", false, "reset all settings")
 	settingCmd.BoolVar(&show, "show", false, "show current settings")
 	settingCmd.IntVar(&port, "port", 0, "set panel port")
+	settingCmd.StringVar(&listen, "listen", "", "set panel listen")
 	settingCmd.StringVar(&username, "username", "", "set login username")
 	settingCmd.StringVar(&password, "password", "", "set login password")
 	settingCmd.StringVar(&tgbottoken, "tgbottoken", "", "set telegrame bot token")
@@ -266,7 +278,7 @@ func main() {
 		if reset {
 			resetSetting()
 		} else {
-			updateSetting(port, username, password)
+			updateSetting(port, username, password, listen)
 		}
 		if show {
 			showSetting(show)

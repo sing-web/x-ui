@@ -488,6 +488,7 @@ class TlsStreamSettings extends XrayCommonClass {
         minVersion = TLS_VERSION_OPTION.TLS12,
         maxVersion = TLS_VERSION_OPTION.TLS13,
         cipherSuites = '',
+        allowInsecure = false,
         fingerprint = UTLS_FINGERPRINT.UTLS_CHROME,
         certificates = [new TlsStreamSettings.Cert()], alpn = ['']) {
         super();
@@ -496,6 +497,7 @@ class TlsStreamSettings extends XrayCommonClass {
         this.minVersion = minVersion;
         this.maxVersion = maxVersion;
         this.cipherSuites = cipherSuites;
+        this.allowInsecure = allowInsecure;
         this.fingerprint = fingerprint;
         this.certs = certificates;
         this.alpn = alpn;
@@ -520,6 +522,7 @@ class TlsStreamSettings extends XrayCommonClass {
             json.minVersion,
             json.maxVersion,
             json.cipherSuites,
+            json.allowInsecure,
             json.fingerprint,
             certs,
             json.alpn,
@@ -533,6 +536,7 @@ class TlsStreamSettings extends XrayCommonClass {
             minVersion: this.minVersion,
             maxVersion: this.maxVersion,
             cipherSuites: this.cipherSuites,
+            allowInsecure: this.allowInsecure,
             fingerprint: this.fingerprint,
             certificates: TlsStreamSettings.toJsonArray(this.certs),
             alpn: this.alpn,
@@ -1155,6 +1159,7 @@ class Inbound extends XrayCommonClass {
             tls: this.stream.security,
             sni: host,
             alpn: this.stream.tls.alpn.join(','),
+            allowInsecure: this.stream.tls.allowInsecure,
             fp: fingerprint,
         };
         return 'vmess://' + base64(JSON.stringify(obj, null, 2));
@@ -1219,6 +1224,9 @@ class Inbound extends XrayCommonClass {
 
         if (this.stream.security === 'tls') {
             params.set("alpn", this.stream.tls.alpn);
+            if (this.stream.tls.allowInsecure) {
+                params.set("allowInsecure", "1");
+            }
             if (!ObjectUtil.isEmpty(this.stream.tls.server)) {
                 address = this.stream.tls.server;
                 params.set("sni", address);
@@ -1326,6 +1334,9 @@ class Inbound extends XrayCommonClass {
 
         if (this.stream.security === 'tls') {
             params.set("alpn", this.stream.tls.alpn);
+            if (this.stream.tls.allowInsecure) {
+                params.set("allowInsecure", "1");
+            }
             if (!ObjectUtil.isEmpty(this.stream.tls.server)) {
                 address = this.stream.tls.server;
                 params.set("sni", address);

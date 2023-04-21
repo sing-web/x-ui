@@ -11,6 +11,7 @@ import (
 	"os"
 	"runtime"
 	"time"
+	"x-ui/config"
 	"x-ui/logger"
 	"x-ui/util/sys"
 	"x-ui/xray"
@@ -322,7 +323,6 @@ func (s *ServerService) UpdateXray(version string) error {
 
 }
 
-
 func (s *ServerService) GetGeoipVersions() ([]string, error) {
 	url := "https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases"
 	resp, err := http.Get(url)
@@ -461,4 +461,21 @@ func (s *ServerService) UpdateGeosite(version string) error {
 
 	return nil
 
+}
+
+func (s *ServerService) GetDb() ([]byte, error) {
+	// Open the file for reading
+	file, err := os.Open(config.GetDBPath())
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	// Read the file contents
+	fileContents, err := io.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+
+	return fileContents, nil
 }

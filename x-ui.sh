@@ -77,7 +77,7 @@ fi
 
 confirm() {
     if [[ $# > 1 ]]; then
-        echo && read -p "$1 [默认$2]: " temp
+        echo && read -p "$1 [default $2]: " temp
         if [[ x"${temp}" == x"" ]]; then
             temp=$2
         fi
@@ -433,31 +433,6 @@ open_ports(){
     iptables -X 2>/dev/null
     netfilter-persistent save 2>/dev/null
     green "All ports have been released successfully!"
-}
-
-x25519() {
-    arch=$(arch)
-    if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
-        arch="amd64"
-    elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
-        arch="arm64"
-    elif [[ $arch == "s390x" ]]; then
-        arch="s390x"
-    else
-        arch="amd64"
-    fi
-    
-    keys=$(/usr/local/x-ui/bin/xray-linux-${arch} x25519)
-    public_key=$(echo $keys | awk -F " " '{print $6}')
-    private_key=$(echo $keys | awk -F " " '{print $3}')
-    short_id=$(openssl rand -hex 8)
-    green "The public and private keys and shortId for xray Reality have been generated successfully!"
-    yellow "Please save this content for use in creating Reality nodes"
-    red "Public key: $public_key"
-    red "private key: $private_key"
-    red "shortId: $short_id"
-    echo ""
-    before_show_menu
 }
 
 show_usage() {

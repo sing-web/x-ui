@@ -1,10 +1,11 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"time"
 	"x-ui/web/global"
 	"x-ui/web/service"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ServerController struct {
@@ -53,6 +54,7 @@ func (a *ServerController) initRouter(g *gin.RouterGroup) {
 	g.POST("/installGeoip/:version", a.installGeoip)
 	g.POST("/getGeositeVersion", a.getGeositeVersion)
 	g.POST("/installGeosite/:version", a.installGeosite)
+	g.GET("/getDb", a.getDb)
 }
 
 func (a *ServerController) refreshStatus() {
@@ -170,4 +172,18 @@ func (a *ServerController) installGeosite(c *gin.Context) {
 	version := c.Param("version")
 	err := a.serverService.UpdateGeosite(version)
 	jsonMsg(c, "安装 Geosite", err)
+}
+
+func (a *ServerController) getDb(c *gin.Context) {
+	db, err := a.serverService.GetDb()
+	if err != nil {
+		jsonMsg(c, "get Database", err)
+		return
+	}
+	// Set the headers for the response
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Disposition", "attachment; filename=x-ui.db")
+
+	// Write the file contents to the response
+	c.Writer.Write(db)
 }

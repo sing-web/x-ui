@@ -15,6 +15,7 @@ Multi-protocol, multi-user xray panel support
 - Customizable xray configuration templates
 - Support https access panel (self-provided domain + ssl certificate)
 - Support one-click SSL certificate application and automatic renewal
+- Support panel database backup
 - More advanced configuration items, see panel for details
 
 # Installation & Upgrade

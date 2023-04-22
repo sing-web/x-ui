@@ -72,6 +72,8 @@
                     <a-row>
                         <a-col :sm="24" :md="12">
                             <a-card hoverable>
+                                x-ui 版本:
+                                <a-tag :color="green">{{ .cur_ver }}</a-tag>
                                 xray 状态:
                                 <a-tag :color="status.xray.color">[[ status.xray.state ]]</a-tag>
                                 <a-tooltip v-if="status.xray.state === State.Error">

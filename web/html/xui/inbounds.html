@@ -46,6 +46,7 @@
                         <div slot="title">
                             <a-button type="primary" @click="openAddInbound">添加入站</a-button>
                             <a-button type="primary" @click="resetAllTraffic">流量重置</a-button>
+                            <a-button type="primary" @click="getBackup">导出数据</a-button>
                         </div>
                         <a-input v-model="searchKey" placeholder="搜索" autofocus style="max-width: 300px"></a-input>
                         <a-table :columns="columns" :row-key="dbInbound => dbInbound.id"
@@ -343,6 +344,9 @@
             },
             switchEnable(dbInbound) {
                 this.submit(`/xui/inbound/update/${dbInbound.id}`, dbInbound);
+            },
+            getBackup(){
+                window.location = basePath + 'server/getDatabase';
             },
             async submit(url, data, modal) {
                 const msg = await HttpUtil.postWithModal(url, data, modal);

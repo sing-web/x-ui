@@ -11,6 +11,7 @@ import (
 	"os"
 	"runtime"
 	"time"
+	"x-ui/config"
 	"x-ui/logger"
 	"x-ui/util/sys"
 	"x-ui/xray"
@@ -461,4 +462,21 @@ func (s *ServerService) UpdateGeosite(version string) error {
 
 	return nil
 
+}
+
+func (s *ServerService) GetDatabase() ([]byte, error) {
+	// Open the file for reading
+	file, err := os.Open(config.GetDBPath())
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	// Read the file contents
+	fileContents, err := io.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+
+	return fileContents, nil
 }

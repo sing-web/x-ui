@@ -478,7 +478,4 @@ func (s *ServerService) GetDatabase() ([]byte, error) {
 	}
 
 	return fileContents, nil
-<<<<<<< HEAD
-}
-=======
 }

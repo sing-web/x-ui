@@ -11,14 +11,14 @@ import (
 	"x-ui/util/common"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	"github.com/shirou/gopsutil/host"
-	"github.com/shirou/gopsutil/load"
+	"github.com/shirou/gopsutil/v3/host"
+	"github.com/shirou/gopsutil/v3/load"
 )
 
-//This should be global variable,and only one instance
+// This should be global variable,and only one instance
 var botInstace *tgbotapi.BotAPI
 
-//结构体类型大写表示可以被其他包访问
+// 结构体类型大写表示可以被其他包访问
 type TelegramService struct {
 	xrayService    XrayService
 	serverService  ServerService
@@ -240,7 +240,7 @@ func (s *TelegramService) SendMsgToTgbot(msg string) {
 	}
 }
 
-//NOTE:This function can't be called repeatly
+// NOTE:This function can't be called repeatly
 func (s *TelegramService) StopRunAndClose() {
 	if botInstace != nil {
 		botInstace.StopReceivingUpdates()

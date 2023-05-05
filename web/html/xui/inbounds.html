@@ -346,7 +346,7 @@
                 this.submit(`/xui/inbound/update/${dbInbound.id}`, dbInbound);
             },
             getBackup(){
-                window.location = basePath + 'server/getDb';
+                window.location = basePath + 'server/getDatabase';
             },
             async submit(url, data, modal) {
                 const msg = await HttpUtil.postWithModal(url, data, modal);

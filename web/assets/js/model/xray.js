@@ -45,7 +45,7 @@ const RULE_DOMAIN = {
 
 const FLOW_VISION = {
     RPRXVISION: "xtls-rprx-vision"
-}
+};
 
 const TLS_VERSION_OPTION = {
     TLS10: "1.0",
@@ -87,6 +87,12 @@ const UTLS_FINGERPRINT = {
     UTLS_RANDOMIZED: "randomized",
 };
 
+const SNIFFING_OPTION = {
+    HTTP:    "http",
+    TLS:     "tls",
+    QUIC:    "quic",
+};
+
 const ALPN_OPTION = {
     H3: "h3",
     H2: "h2",
@@ -97,14 +103,14 @@ const TCP_CONGESTION = {
     bbr: "bbr",
     cubic: "cubic",
     reno: "reno",
-}
+};
 
 const DOMAIN_STRATEGY = {
     AsIs: "AsIs",
     UseIP: "UseIP",
     UseIPv4: "UseIPv4",
     UseIPv6: "UseIPv6",
-}
+};
 
 const bytesToHex = e => Array.from(e).map(e => e.toString(16).padStart(2, 0)).join('');
 const hexToBytes = e => new Uint8Array(e.match(/[0-9a-f]{2}/gi).map(e => parseInt(e, 16)));
@@ -118,6 +124,7 @@ Object.freeze(FLOW_VISION);
 Object.freeze(TLS_VERSION_OPTION);
 Object.freeze(TLS_CIPHER_OPTION);
 Object.freeze(ALPN_OPTION);
+Object.freeze(SNIFFING_OPTION);
 Object.freeze(TCP_CONGESTION);
 Object.freeze(DOMAIN_STRATEGY);
 
@@ -535,7 +542,7 @@ class TlsStreamSettings extends XrayCommonClass {
             rejectUnknownSni: this.rejectUnknownSni,
             minVersion: this.minVersion,
             maxVersion: this.maxVersion,
-            cipherSuites: this.cipherSuites,
+            cipherSuites: this.cipherSuites instanceof Array ? this.cipherSuites.join(',') : this.cipherSuites.split(','),
             allowInsecure: this.allowInsecure,
             fingerprint: this.fingerprint,
             certificates: TlsStreamSettings.toJsonArray(this.certs),
@@ -782,7 +789,7 @@ class StreamSettings extends XrayCommonClass {
 }
 
 class Sniffing extends XrayCommonClass {
-    constructor(enabled = true, destOverride = ['http', 'tls']) {
+    constructor(enabled = true, destOverride = ['http', 'tls', 'quic']) {
         super();
         this.enabled = enabled;
         this.destOverride = destOverride;
@@ -792,7 +799,7 @@ class Sniffing extends XrayCommonClass {
         let destOverride = ObjectUtil.clone(json.destOverride);
         if (!ObjectUtil.isEmpty(destOverride) && !ObjectUtil.isArrEmpty(destOverride)) {
             if (ObjectUtil.isEmpty(destOverride[0])) {
-                destOverride = ['http', 'tls'];
+                destOverride = ['http', 'tls', 'quic'];
             }
         }
         return new Sniffing(

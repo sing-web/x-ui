@@ -54,7 +54,7 @@ func (a *ServerController) initRouter(g *gin.RouterGroup) {
 	g.POST("/installGeoip/:version", a.installGeoip)
 	g.POST("/getGeositeVersion", a.getGeositeVersion)
 	g.POST("/installGeosite/:version", a.installGeosite)
-	g.GET("/getDb", a.getDb)
+	g.GET("/getDatabase", a.getDatabase)
 }
 
 func (a *ServerController) refreshStatus() {
@@ -174,8 +174,8 @@ func (a *ServerController) installGeosite(c *gin.Context) {
 	jsonMsg(c, "安装 Geosite", err)
 }
 
-func (a *ServerController) getDb(c *gin.Context) {
-	db, err := a.serverService.GetDb()
+func (a *ServerController) getDatabase(c *gin.Context) {
+	db, err := a.serverService.GetDatabase()
 	if err != nil {
 		jsonMsg(c, "get Database", err)
 		return

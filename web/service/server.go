@@ -323,7 +323,6 @@ func (s *ServerService) UpdateXray(version string) error {
 
 }
 
-
 func (s *ServerService) GetGeoipVersions() ([]string, error) {
 	url := "https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/releases"
 	resp, err := http.Get(url)
@@ -479,4 +478,7 @@ func (s *ServerService) GetDatabase() ([]byte, error) {
 	}
 
 	return fileContents, nil
+<<<<<<< HEAD
+}
+=======
 }

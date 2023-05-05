@@ -1,10 +1,11 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"time"
 	"x-ui/web/global"
 	"x-ui/web/service"
+
+	"github.com/gin-gonic/gin"
 )
 
 type ServerController struct {

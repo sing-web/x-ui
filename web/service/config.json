@@ -58,10 +58,10 @@
       "tag": "wireguard-warp",
       "protocol": "wireguard",
       "settings": {
-        "secretKey": "GAl2z55U2UzNU5FG+LW3kowK+BA/WGMi1dWYwx20pWk=",
+        "secretKey": "wBgj79mhiENspSFQHIULqHP8IKFJJcdq37R51DJvDlk=",
         "address": [
           "172.16.0.2/32",
-          "2606:4700:110:8f0a:fcdb:db2f:3b3:4d49/128"
+          "2606:4700:110:845b:e753:d262:c6f:db5b/128"
         ],
         "peers": [
           {
@@ -73,11 +73,7 @@
             "endpoint": "engage.cloudflareclient.com:2408"
           }
         ],
-        "reserved": [
-          230,
-          25,
-          169
-        ]
+        "reserved": [249,159,96]
       }
     }
   ],

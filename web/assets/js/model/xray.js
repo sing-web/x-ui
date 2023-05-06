@@ -542,7 +542,7 @@ class TlsStreamSettings extends XrayCommonClass {
             rejectUnknownSni: this.rejectUnknownSni,
             minVersion: this.minVersion,
             maxVersion: this.maxVersion,
-            cipherSuites: this.cipherSuites instanceof Array ? this.cipherSuites.join(',') : this.cipherSuites.split(','),
+            cipherSuites: this.cipherSuites instanceof Array ? this.cipherSuites.join(':') : this.cipherSuites.split(':'),
             allowInsecure: this.allowInsecure,
             fingerprint: this.fingerprint,
             certificates: TlsStreamSettings.toJsonArray(this.certs),
@@ -675,7 +675,7 @@ class SockoptStreamSettings extends XrayCommonClass {
         this.acceptProxyProtocol = acceptProxyProtocol;
         this.tcpKeepAliveIdle = tcpKeepAliveIdle;
         this.tcpKeepAliveInterval = tcpKeepAliveInterval;
-        this._interface = _interface;
+        this.interface = _interface instanceof Array ? this.interface : _interface;
     }
 
     static fromJson(json = {}) {
@@ -686,7 +686,7 @@ class SockoptStreamSettings extends XrayCommonClass {
             json.acceptProxyProtocol,
             json.tcpKeepAliveIdle,
             json.tcpKeepAliveInterval,
-            json._interface,
+            json.interface,
         );
     }
 
@@ -698,7 +698,7 @@ class SockoptStreamSettings extends XrayCommonClass {
             acceptProxyProtocol: this.acceptProxyProtocol,
             tcpKeepAliveIdle: this.tcpKeepAliveIdle,
             tcpKeepAliveInterval: this.tcpKeepAliveInterval,
-            interface: this._interface,
+            interface: this.interface,
         };
     }
 }

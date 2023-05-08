@@ -496,7 +496,7 @@ class TlsStreamSettings extends XrayCommonClass {
         maxVersion = TLS_VERSION_OPTION.TLS13,
         cipherSuites = '',
         allowInsecure = false,
-        fingerprint = UTLS_FINGERPRINT.UTLS_CHROME,
+        fingerprint = UTLS_FINGERPRINT.UTLS_RANDOM,
         certificates = [new TlsStreamSettings.Cert()], alpn = ['']) {
         super();
         this.server = serverName;

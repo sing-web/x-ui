@@ -20,8 +20,8 @@
         <a-input v-model.trim="vlessobj.id"></a-input>
     </a-form-item>
 
-    <a-form-item v-if="inbound.tls && inbound.isTcp" label="流控">
-        <a-select v-model="vlessobj.flow" style="width: 180px">
+    <a-form-item v-if="inbound.tls && inbound.isTcp" label="flow">
+        <a-select v-model="vlessobj.flow" style="width: 150px">
             <a-select-option value="">无</a-select-option>
             <a-select-option v-for="key in FLOW_VISION" :value="key">[[ key ]]</a-select-option>
         </a-select>

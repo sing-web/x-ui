@@ -84,6 +84,7 @@
                                 <a-tag color="blue" style="cursor: pointer;" @click="stopXrayService">停止</a-tag>
                                 <a-tag color="blue" style="cursor: pointer;" @click="restartXrayService">重启</a-tag>
                                 <a-tag color="blue" @click="openSelectV2rayVersion">版本切换</a-tag>
+                                <a-tag color="blue" style="cursor: pointer;" @click="openLogs(20)">查看日志</a-tag>
                             </a-card>
                         </a-col>
                         <a-col :sm="24" :md="12">
@@ -169,6 +170,25 @@
                                 </a-row>
                             </a-card>
                         </a-col>
+                        <a-col :sm="24" :md="12">
+                            <a-card hoverable>
+                                x-ui 版本:
+                                <a-tag color="green">{{ .cur_ver }}</a-tag>
+                                GitHub 项目:
+                                <a href="https://github.com/sing-web/x-ui" target="_blank"><a-tag
+                                        color="green">sing-web/x-ui</a-tag></a>
+                            </a-card>
+                        </a-col>
+                        <a-col :sm="24" :md="12">
+                            <a-card hoverable>
+                                Telegram 频道:
+                                <a href="https://t.me/sing_web" target="_blank"><a-tag
+                                        color="blue">@sing_web</a-tag></a>
+                                Telegram 群组:
+                                <a href="https://t.me/sing_web_group" target="_blank"><a-tag
+                                        color="blue">@sing_web_group</a-tag></a>
+                            </a-card>
+                        </a-col>
                     </a-row>
                 </transition>
             </a-layout-content>
@@ -183,6 +203,7 @@
                 </a-tag>
             </template>
         </a-modal>
+
         <a-modal id="version-modal" v-model="versionModal.geoip" title="geoip更新" :closable="true"
             @ok="() => versionModal.geoip = false" ok-text="确定" cancel-text="取消">
             <h2>点击你想更新的版本</h2>
@@ -194,6 +215,7 @@
                 </a-tag>
             </template>
         </a-modal>
+
         <a-modal id="version-modal" v-model="versionModal.geosite" title="geosite更新" :closable="true"
             @ok="() => versionModal.geosite = false" ok-text="确定" cancel-text="取消">
             <h2>点击你想更新的版本</h2>
@@ -204,6 +226,33 @@
                     [[ version ]]
                 </a-tag>
             </template>
+        </a-modal>
+
+        <a-modal id="log-modal" v-model="logModal.visible" title="x-ui logs" :closable="true"
+            @ok="() => logModal.visible = false" @cancel="() => logModal.visible = false" width="800px" footer="">
+            <a-form layout="inline">
+                <a-form-item label="行数">
+                    <a-select v-model="logModal.rows" style="width: 80px" @change="openLogs(logModal.rows)">
+                        <a-select-option value="10">10</a-select-option>
+                        <a-select-option value="20">20</a-select-option>
+                        <a-select-option value="50">50</a-select-option>
+                        <a-select-option value="100">100</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item>
+                    <button class="ant-btn ant-btn-primary" @click="openLogs(logModal.rows)"><a-icon
+                            type="sync"></a-icon> 刷新</button>
+                </a-form-item>
+                <a-form-item>
+                    <a-button type="primary" style="margin-bottom: 10px;"
+                        :href="'data:application/text;charset=utf-8,' + encodeURIComponent(logModal.logs)"
+                        download="x-ui.log">
+                        下载 x-ui.log
+                    </a-button>
+                </a-form-item>
+            </a-form>
+            <a-input type="textarea" v-model="logModal.logs" disabled="true"
+                :autosize="{ minRows: 10, maxRows: 22}"></a-input>
         </a-modal>
     </a-layout>
     {{template "js" .}}
@@ -310,6 +359,20 @@
             },
         };
 
+        const logModal = {
+            visible: false,
+            logs: '',
+            rows: 20,
+            show(logs, rows) {
+                this.visible = true;
+                this.rows = rows;
+                this.logs = logs.join("\n");
+            },
+            hide() {
+                this.visible = false;
+            },
+        };
+
         const app = new Vue({
             delimiters: ['[[', ']]'],
             el: '#app',
@@ -358,6 +421,15 @@
                     if (!msg.success) {
                         return;
                     }
+                },
+                async openLogs(rows) {
+                    this.loading(true);
+                    const msg = await HttpUtil.post('server/logs/' + rows);
+                    this.loading(false);
+                    if (!msg.success) {
+                        return;
+                    }
+                    logModal.show(msg.obj, rows);
                 },
                 async geoipUpdate() {
                     this.loading(true);

@@ -504,3 +504,26 @@ func (s *ServerService) GetDatabase() ([]byte, error) {
 
 	return fileContents, nil
 }
+
+func (s *ServerService) GetConfigJson() (interface{}, error) {
+	// Open the file for reading
+	file, err := os.Open(xray.GetConfigPath())
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	// Read the file contents
+	fileContents, err := io.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+
+	var jsonData interface{}
+	err = json.Unmarshal(fileContents, &jsonData)
+	if err != nil {
+		return nil, err
+	}
+
+	return jsonData, nil
+}

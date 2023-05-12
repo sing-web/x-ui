@@ -56,6 +56,7 @@ func (a *ServerController) initRouter(g *gin.RouterGroup) {
 	g.POST("/getGeositeVersion", a.getGeositeVersion)
 	g.POST("/installGeosite/:version", a.installGeosite)
 	g.GET("/getDatabase", a.getDatabase)
+	g.POST("/getConfigJson", a.getConfigJson)
 }
 
 func (a *ServerController) refreshStatus() {
@@ -197,4 +198,13 @@ func (a *ServerController) getDatabase(c *gin.Context) {
 
 	// Write the file contents to the response
 	c.Writer.Write(db)
+}
+
+func (a *ServerController) getConfigJson(c *gin.Context) {
+	configJson, err := a.serverService.GetConfigJson()
+	if err != nil {
+		jsonMsg(c, "get config.json", err)
+		return
+	}
+	jsonObj(c, configJson, nil)
 }

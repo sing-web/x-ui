@@ -542,7 +542,7 @@ class TlsStreamSettings extends XrayCommonClass {
             rejectUnknownSni: this.rejectUnknownSni,
             minVersion: this.minVersion,
             maxVersion: this.maxVersion,
-            cipherSuites: this.cipherSuites instanceof Array ? this.cipherSuites.join(':') : this.cipherSuites.split(':'),
+            cipherSuites: this.cipherSuites instanceof Array ? this.cipherSuites.join(':') : this.cipherSuites,
             allowInsecure: this.allowInsecure,
             fingerprint: this.fingerprint,
             certificates: TlsStreamSettings.toJsonArray(this.certs),
@@ -754,6 +754,16 @@ class StreamSettings extends XrayCommonClass {
         }
     }
 
+    get isSockopt() {
+        return ['tcp', 'http', 'grpc', 'ws'].indexOf(this.network) !== -1;
+    }
+
+    set isSockopt(isSockopt) {
+        if (isSockopt) {
+            return ['tcp', 'http', 'grpc', 'ws'].indexOf(this.network) !== -1;
+        }
+    }
+
     static fromJson(json = {}) {
         return new StreamSettings(
             json.network,
@@ -783,7 +793,7 @@ class StreamSettings extends XrayCommonClass {
             httpSettings: network === 'http' ? this.http.toJson() : undefined,
             quicSettings: network === 'quic' ? this.quic.toJson() : undefined,
             grpcSettings: network === 'grpc' ? this.grpc.toJson() : undefined,
-            sockopt: this.sockopt ? this.sockopt.toJson() : undefined,
+            sockopt: this.isSockopt ? this.sockopt.toJson() : undefined,
         };
     }
 }

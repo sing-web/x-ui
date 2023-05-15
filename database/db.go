@@ -1,14 +1,17 @@
 package database
 
 import (
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
+	"bytes"
+	"io"
 	"io/fs"
 	"os"
 	"path"
 	"x-ui/config"
 	"x-ui/database/model"
+
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var db *gorm.DB
@@ -86,4 +89,14 @@ func GetDB() *gorm.DB {
 
 func IsNotFound(err error) bool {
 	return err == gorm.ErrRecordNotFound
+}
+
+func IsSQLiteDB(file io.Reader) (bool, error) {
+	signature := []byte("SQLite format 3\x00")
+	buf := make([]byte, len(signature))
+	_, err := file.Read(buf)
+	if err != nil {
+		return false, err
+	}
+	return bytes.Equal(buf, signature), nil
 }

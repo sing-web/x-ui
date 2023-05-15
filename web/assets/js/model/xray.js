@@ -55,17 +55,11 @@ const TLS_VERSION_OPTION = {
 };
 
 const TLS_CIPHER_OPTION = {
-    RSA_AES_128_CBC: "TLS_RSA_WITH_AES_128_CBC_SHA",
-    RSA_AES_256_CBC: "TLS_RSA_WITH_AES_256_CBC_SHA",
-    RSA_AES_128_GCM: "TLS_RSA_WITH_AES_128_GCM_SHA256",
-    RSA_AES_256_GCM: "TLS_RSA_WITH_AES_256_GCM_SHA384",
     AES_128_GCM: "TLS_AES_128_GCM_SHA256",
     AES_256_GCM: "TLS_AES_256_GCM_SHA384",
     CHACHA20_POLY1305: "TLS_CHACHA20_POLY1305_SHA256",
     ECDHE_ECDSA_AES_128_CBC: "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
     ECDHE_ECDSA_AES_256_CBC: "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA",
-    ECDHE_RSA_AES_128_CBC: "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
-    ECDHE_RSA_AES_256_CBC: "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
     ECDHE_ECDSA_AES_128_GCM: "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
     ECDHE_ECDSA_AES_256_GCM: "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384",
     ECDHE_RSA_AES_128_GCM: "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
@@ -660,44 +654,55 @@ class RealityStreamSettings extends XrayCommonClass {
 }
 
 class SockoptStreamSettings extends XrayCommonClass {
-    constructor(tcpFastOpen = false,
+    constructor(tcpMaxSeg = 1440,
+        tcpFastOpen = false,
         domainStrategy = DOMAIN_STRATEGY.AsIs,
         tcpcongestion = '',
         acceptProxyProtocol = false,
         tcpKeepAliveIdle = 0,
         tcpKeepAliveInterval = 0,
+        tcpUserTimeout = 10000,
         _interface = "",
     ) {
         super();
+        this.tcpMaxSeg = tcpMaxSeg;
         this.tcpFastOpen = tcpFastOpen;
         this.domainStrategy = domainStrategy;
         this.tcpcongestion = tcpcongestion;
         this.acceptProxyProtocol = acceptProxyProtocol;
         this.tcpKeepAliveIdle = tcpKeepAliveIdle;
         this.tcpKeepAliveInterval = tcpKeepAliveInterval;
+        this.tcpUserTimeout = tcpUserTimeout;
+        this.tcpcongestion = tcpcongestion;
         this.interface = _interface instanceof Array ? this.interface : _interface;
     }
 
     static fromJson(json = {}) {
         return new SockoptStreamSettings(
+            json.tcpMaxSeg,
             json.tcpFastOpen,
             json.domainStrategy,
             json.tcpcongestion,
             json.acceptProxyProtocol,
             json.tcpKeepAliveIdle,
             json.tcpKeepAliveInterval,
+            json.tcpUserTimeout,
+            json.tcpcongestion,
             json.interface,
         );
     }
 
     toJson() {
         return {
+            tcpMaxSeg: this.tcpMaxSeg,
             tcpFastOpen: this.tcpFastOpen,
             domainStrategy: this.domainStrategy,
             tcpcongestion: this.tcpcongestion,
             acceptProxyProtocol: this.acceptProxyProtocol,
             tcpKeepAliveIdle: this.tcpKeepAliveIdle,
             tcpKeepAliveInterval: this.tcpKeepAliveInterval,
+            tcpUserTimeout: this.tcpUserTimeout,
+            tcpcongestion: this.tcpcongestion,
             interface: this.interface,
         };
     }

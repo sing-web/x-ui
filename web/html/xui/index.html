@@ -86,6 +86,7 @@
                                 <a-tag color="blue" @click="openSelectV2rayVersion">版本切换</a-tag>
                                 <a-tag color="blue" style="cursor: pointer;" @click="openLogs(20)">查看日志</a-tag>
                                 <a-tag color="blue" style="cursor: pointer;" @click="openConfig">查看配置文件</a-tag>
+                                <a-tag color="blue" style="cursor: pointer;" @click="openBackup">备份还原</a-tag>
                             </a-card>
                         </a-col>
                         <a-col :sm="24" :md="12">
@@ -217,6 +218,22 @@
             </template>
         </a-modal>
 
+        <a-modal id="backup-modal" v-model="backupModal.visible" :title="backupModal.title" :closable="true"
+            @ok="() => backupModal.hide()" @cancel="() => backupModal.hide()">
+            <p style="color: inherit; font-size: 16px; padding: 4px 2px;">
+                <a-icon type="warning" style="color: inherit; font-size: 20px;"></a-icon>
+                [[ backupModal.description ]]
+            </p>
+            <a-space direction="horizontal" style="text-align: center" style="margin-bottom: 10px;">
+                <a-button type="primary" @click="exportDatabase()">
+                    [[ backupModal.exportText ]]
+                </a-button>
+                <a-button type="primary" @click="importDatabase()">
+                    [[ backupModal.importText ]]
+                </a-button>
+            </a-space>
+        </a-modal>
+
         <a-modal id="version-modal" v-model="versionModal.geosite" title="geosite更新" :closable="true"
             @ok="() => versionModal.geosite = false" ok-text="确定" cancel-text="取消">
             <h2>点击你想更新的版本</h2>
@@ -259,6 +276,29 @@
     {{template "js" .}}
     {{template "textModal"}}
     <script>
+
+        const backupModal = {
+            visible: false,
+            title: '',
+            description: '',
+            exportText: '',
+            importText: '',
+            show({
+                title = '备份和恢复数据库',
+                description = '请记住在导入新数据库之前进行备份。',
+                exportText = '下载数据库',
+                importText = '上传数据库',
+            }) {
+                this.title = title;
+                this.description = description;
+                this.exportText = exportText;
+                this.importText = importText;
+                this.visible = true;
+            },
+            hide() {
+                this.visible = false;
+            },
+        };
 
         const State = {
             Running: "running",
@@ -501,6 +541,49 @@
                             this.loading(false);
                         },
                     });
+                },
+                openBackup() {
+                    backupModal.show({
+                        title: '备份和恢复数据库',
+                        description: '请记住在导入新数据库之前进行备份。',
+                        exportText: '下载数据库',
+                        importText: '上传数据库',
+                    });
+                },
+                exportDatabase() {
+                    window.location = basePath + 'server/getDatabase';
+                },
+                importDatabase() {
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = '.db';
+                    fileInput.addEventListener('change', async (event) => {
+                        const dbFile = event.target.files[0];
+                        if (dbFile) {
+                            const formData = new FormData();
+                            formData.append('db', dbFile);
+                            backupModal.hide();
+                            this.loading(true);
+                            const uploadMsg = await HttpUtil.post('server/importDatabase', formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                }
+                            });
+                            this.loading(false);
+                            if (!uploadMsg.success) {
+                                return;
+                            }
+                            this.loading(true);
+                            const restartMsg = await HttpUtil.post("/xui/setting/restartPanel");
+                            this.loading(false);
+                            if (restartMsg.success) {
+                                this.loading(true);
+                                await PromiseUtil.sleep(5000);
+                                location.reload();
+                            }
+                        }
+                    });
+                    fileInput.click();
                 },
             },
             async mounted() {

@@ -62,6 +62,7 @@ func (a *ServerController) initRouter(g *gin.RouterGroup) {
 	g.POST("/installGeosite/:version", a.installGeosite)
 	g.GET("/getDatabase", a.getDatabase)
 	g.POST("/getConfigJson", a.getConfigJson)
+	g.POST("/importDatabase", a.importDatabase)
 }
 
 func (a *ServerController) refreshStatus() {
@@ -225,4 +226,26 @@ func (a *ServerController) getConfigJson(c *gin.Context) {
 		return
 	}
 	jsonObj(c, configJson, nil)
+}
+
+func (a *ServerController) importDatabase(c *gin.Context) {
+	// Get the file from the request body
+	file, _, err := c.Request.FormFile("db")
+	if err != nil {
+		jsonMsg(c, "Error reading db file", err)
+		return
+	}
+	defer file.Close()
+	// Always restart Xray before return
+	defer a.serverService.RestartXrayService()
+	defer func() {
+		a.lastGetStatusTime = time.Now()
+	}()
+	// Import it
+	err = a.serverService.ImportDatabase(file)
+	if err != nil {
+		jsonMsg(c, "", err)
+		return
+	}
+	jsonObj(c, "Import DB", nil)
 }

@@ -31,7 +31,9 @@ fi
 
 arch=$(arch)
 
-if [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
+if [[ $arch == "i386" || $arch == "i686" ]]; then
+    arch="386"
+elif [[ $arch == "x86_64" || $arch == "x64" || $arch == "amd64" ]]; then
     arch="amd64"
 elif [[ $arch == "aarch64" || $arch == "arm64" ]]; then
     arch="arm64"
@@ -43,11 +45,6 @@ else
 fi
 
 echo "Arch: ${arch}"
-
-if [ $(getconf WORD_BIT) != '32' ] && [ $(getconf LONG_BIT) != '64' ]; then
-    echo "This software does not support 32-bit system (x86), please use 64-bit system (x86_64), if the detection is wrong, please contact the author"
-    exit -1
-fi
 
 os_version=""
 

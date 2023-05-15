@@ -255,6 +255,8 @@ func (s *ServerService) downloadXRay(version string) (string, error) {
 	}
 
 	switch arch {
+	case "386":
+		arch = "32"
 	case "amd64":
 		arch = "64"
 	case "arm64":

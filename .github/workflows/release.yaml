@@ -36,7 +36,7 @@ jobs:
       - name: build linux 386 version
         run: |
           apt-get update
-          apt install -y sudo curl wget unzip ca-certificates gcc-i686-linux-gnu
+          apt install -y sudo curl wget unzip ca-certificates build-essential gcc-i686-linux-gnu
           CGO_ENABLED=1 GOOS=linux GOARCH=386 go build -o xui-release -v main.go
           mkdir x-ui
           cp xui-release x-ui/xui-release

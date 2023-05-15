@@ -15,7 +15,11 @@
     <transition name="list" appear>
         <a-card hoverable style="margin-bottom: 20px;" :class="siderDrawer.isDarkTheme ? darkClass : ''">
             </a-form-item>
-            <a-form-item label="tcpFastOpen">
+            <a-form-item label="TCP 数据包最大传输单元">
+                <a-input v-model.number="inbound.stream.sockopt.tcpMaxSeg" style="width: 65px;">
+                </a-input>
+            </a-form-item>
+            <a-form-item label="TCP Fast Open">
                 <a-switch v-model="inbound.stream.sockopt.tcpFastOpen">
                     <!-- <a-select-option :value="false">false</a-select-option>
             <a-select-option :value="true">true</a-select-option> -->
@@ -38,6 +42,10 @@
             </a-form-item>
             <a-form-item label="TCP 空闲时间阈值">
                 <a-input v-model.number="inbound.stream.sockopt.tcpKeepAliveIdle" style="width: 165px;">
+                </a-input>
+            </a-form-item>
+            <a-form-item label="TCP UserTimeout">
+                <a-input v-model.number="inbound.stream.sockopt.tcpUserTimeout" style="width: 165px;">
                 </a-input>
             </a-form-item>
             <a-form-item label="TCP 拥塞控制算法">

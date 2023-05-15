@@ -660,44 +660,55 @@ class RealityStreamSettings extends XrayCommonClass {
 }
 
 class SockoptStreamSettings extends XrayCommonClass {
-    constructor(tcpFastOpen = false,
+    constructor(tcpMaxSeg = 1440,
+        tcpFastOpen = false,
         domainStrategy = DOMAIN_STRATEGY.AsIs,
         tcpcongestion = '',
         acceptProxyProtocol = false,
         tcpKeepAliveIdle = 0,
         tcpKeepAliveInterval = 0,
+        tcpUserTimeout = 10000,
         _interface = "",
     ) {
         super();
+        this.tcpMaxSeg = tcpMaxSeg;
         this.tcpFastOpen = tcpFastOpen;
         this.domainStrategy = domainStrategy;
         this.tcpcongestion = tcpcongestion;
         this.acceptProxyProtocol = acceptProxyProtocol;
         this.tcpKeepAliveIdle = tcpKeepAliveIdle;
         this.tcpKeepAliveInterval = tcpKeepAliveInterval;
+        this.tcpUserTimeout = tcpUserTimeout;
+        this.tcpcongestion = tcpcongestion;
         this.interface = _interface instanceof Array ? this.interface : _interface;
     }
 
     static fromJson(json = {}) {
         return new SockoptStreamSettings(
+            json.tcpMaxSeg,
             json.tcpFastOpen,
             json.domainStrategy,
             json.tcpcongestion,
             json.acceptProxyProtocol,
             json.tcpKeepAliveIdle,
             json.tcpKeepAliveInterval,
+            json.tcpUserTimeout,
+            json.tcpcongestion,
             json.interface,
         );
     }
 
     toJson() {
         return {
+            tcpMaxSeg: this.tcpMaxSeg,
             tcpFastOpen: this.tcpFastOpen,
             domainStrategy: this.domainStrategy,
             tcpcongestion: this.tcpcongestion,
             acceptProxyProtocol: this.acceptProxyProtocol,
             tcpKeepAliveIdle: this.tcpKeepAliveIdle,
             tcpKeepAliveInterval: this.tcpKeepAliveInterval,
+            tcpUserTimeout: this.tcpUserTimeout,
+            tcpcongestion: this.tcpcongestion,
             interface: this.interface,
         };
     }

@@ -1,17 +1,12 @@
 package controller
 
 import (
-	"fmt"
-	"net/http"
-	"regexp"
 	"time"
 	"x-ui/web/global"
 	"x-ui/web/service"
 
 	"github.com/gin-gonic/gin"
 )
-
-var filenameRegex = regexp.MustCompile(`^[a-zA-Z0-9_\-.]+$`)
 
 type ServerController struct {
 	BaseController
@@ -199,24 +194,12 @@ func (a *ServerController) getDatabase(c *gin.Context) {
 		return
 	}
 
-	filename := "x-ui.db"
-
-	if !isValidFilename(filename) {
-		c.AbortWithError(http.StatusBadRequest, fmt.Errorf("Invalid filename"))
-		return
-	}
-
 	// Set the headers for the response
 	c.Header("Content-Type", "application/octet-stream")
-	c.Header("Content-Disposition", "attachment; filename"+filename)
+	c.Header("Content-Disposition", "attachment; filename=x-ui.db")
 
 	// Write the file contents to the response
 	c.Writer.Write(db)
-}
-
-func isValidFilename(filename string) bool {
-    // Validate that the filename only contains allowed characters
-    return filenameRegex.MatchString(filename)
 }
 
 func (a *ServerController) getConfigJson(c *gin.Context) {

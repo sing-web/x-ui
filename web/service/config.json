@@ -88,6 +88,13 @@
         "type": "field"
       },
       {
+        "domain": [
+          "geosite:cn"
+        ],
+        "outboundTag": "blocked",
+        "type": "field"
+      },
+      {
         "ip": [
           "geoip:private",
           "geoip:cn"
@@ -113,7 +120,8 @@
         "type": "field",
         "outboundTag": "wireguard-warp",
         "domain": [
-          "chat.openai.com"
+          "geosite:openai",
+          "domain:sentry.io"
         ]
       },
       {

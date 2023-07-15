@@ -594,10 +594,10 @@ TlsStreamSettings.Cert = class extends XrayCommonClass {
 class RealityStreamSettings extends XrayCommonClass {
     constructor(
         show = false,
-        dest = "www.microsoft.com:443",
+        dest = "www.sega.com:443",
         xver = 0,
         fingerprint = UTLS_FINGERPRINT.UTLS_RANDOM,
-        serverNames = 'www.microsoft.com',
+        serverNames = 'www.sega.com',
         privateKey = RandomUtil.randomX25519PrivateKey(),
         publicKey = '',
         minClientVer = "",

@@ -29,7 +29,7 @@ jobs:
           password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Build and push images to Docker hub
-        uses: docker/build-push-action@v4.1.1
+        uses: docker/build-push-action@v4.2.1
         with:
           push: true
           platforms: linux/amd64, linux/arm64, linux/s390x

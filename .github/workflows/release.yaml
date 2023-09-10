@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     container: docker.io/ubuntu:18.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v4.0.0
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     container: docker.io/ubuntu:18.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v4.0.0
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -118,7 +118,7 @@ jobs:
     runs-on: ubuntu-latest
     container: docker.io/ubuntu:18.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v4.0.0
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -163,7 +163,7 @@ jobs:
     runs-on: ubuntu-latest
     container: docker.io/ubuntu:18.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v4.0.0
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
